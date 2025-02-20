@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "driver2B",
-    "slug": "driver2B",
+    "name": "Driver2B",
+    "slug": "Driver2B",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.Driver2B"
     },
     "web": {
       "bundler": "metro",
