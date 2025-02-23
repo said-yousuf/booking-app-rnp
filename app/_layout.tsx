@@ -4,12 +4,12 @@ import { useEffect } from 'react';
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    InterRegular: require('./assets/fonts/Inter-Regular.ttf'),
-    interBold: require('./assets/fonts/Inter-Bold.ttf'),
-    InterMedium: require('./assets/fonts/Inter-Medium.ttf'),
-    InterSemiBold: require('./assets/fonts/Inter-SemiBold.ttf'),
-    InterExtraBold: require('./assets/fonts/Inter-ExtraBold.ttf'),
-    InterLight: require('./assets/fonts/Inter-Light.ttf'),
+    InterRegular: require('@/assets/fonts/InterDisplay-Regular.ttf'),
+    interBold: require('@/assets/fonts/InterDisplay-Bold.ttf'),
+    InterMedium: require('@/assets/fonts/InterDisplay-Medium.ttf'),
+    InterSemiBold: require('@/assets/fonts/InterDisplay-SemiBold.ttf'),
+    InterExtraBold: require('@/assets/fonts/InterDisplay-ExtraBold.ttf'),
+    InterLight: require('@/assets/fonts/InterDisplay-Light.ttf'),
   });
 
   useEffect(() => {

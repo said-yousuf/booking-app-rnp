@@ -1,4 +1,4 @@
-package com.anonymous.driver2B
+package com.anonymous.Driver2B
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

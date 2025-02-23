@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.driver2B'
+    namespace 'com.anonymous.Driver2B'
     defaultConfig {
-        applicationId 'com.anonymous.driver2B'
+        applicationId 'com.anonymous.Driver2B'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package com.anonymous.driver2B
+package com.anonymous.Driver2B
 
 import android.app.Application
 import android.content.res.Configuration

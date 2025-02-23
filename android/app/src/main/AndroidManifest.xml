@@ -25,7 +25,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="myapp"/>
-        <data android:scheme="com.anonymous.driver2B"/>
+        <data android:scheme="com.anonymous.Driver2B"/>
         <data android:scheme="exp+driver2b"/>
       </intent-filter>
     </activity>
