@@ -1,6 +1,7 @@
 import icons from '@/constants/icons';
 import images from '@/constants/images';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { router } from 'expo-router';
 import { useMemo } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,7 +29,7 @@ export default function App() {
 
       <TouchableOpacity
         style={styles.onboarding_button}
-        onPress={() => showBottomSheet()}
+        onPress={() => router.navigate('/(root)/(auth)/sign-up')}
       >
         <Text style={styles.onboarding_button_text}>Get Started</Text>
       </TouchableOpacity>
