@@ -19,7 +19,7 @@ const Otp = () => {
       </View>
 
       <OtpInput
-        numberOfDigits={6}
+        numberOfDigits={5}
         focusColor="blue"
         autoFocus={false}
         hideStick={true}
@@ -42,7 +42,7 @@ const Otp = () => {
       <View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => router.navigate('/(root)/(auth)/otp')}
+          onPress={() => router.navigate('/(root)/(auth)/sign-in')}
         >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 5, // Space between input boxes
+    marginHorizontal: 5, // Spa ce between input boxes
   },
   pinCodeText: {
     fontSize: 16,
