@@ -22,7 +22,6 @@ const SignUp = () => {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          {' '}
           <Image source={icons.back} style={styles.iconBack} />
         </TouchableOpacity>
         <Image source={icons.status} style={styles.iconStatus} />
@@ -76,7 +75,10 @@ const SignUp = () => {
       </View>
 
       <View>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => router.navigate('/(root)/(auth)/otp')}
+        >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 17,
-    fontWeight: 600,
+    fontWeight: '600',
     lineHeight: 20,
   },
 });
