@@ -53,19 +53,21 @@ const SignIn = () => {
           style={styles.continueButtonContainer}
           onPress={() => router.navigate('/(root)/(auth)/sign-in')}
         >
-          <Text style={styles.continueButtonText}>Continue with Phone</Text>
+          <Text style={styles.continueButtonText}>
+            Continue with Phone Number
+          </Text>
         </TouchableOpacity>
       </View>
 
       {/* Signup and forget password */}
-      <View>
+      <View style={styles.footerContainer}>
         <TouchableOpacity>
-          <Text>Forgot Password</Text>
+          <Text style={styles.styledButton}>Forgot Password</Text>
         </TouchableOpacity>
-        <View>
-          <Text>Don't have an account?</Text>
+        <View style={styles.signupMessageLine}>
+          <Text style={styles.signupTitle}>Don't have an account?</Text>
           <TouchableOpacity>
-            <Text>SignUp</Text>
+            <Text style={styles.styledButton}>SignUp</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
   iconBack: {
     width: 32,
     height: 32,
+    marginLeft: 0,
   },
   titleSection: {
     marginVertical: 10,
@@ -160,6 +163,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderColor: '#625D52',
     marginBottom: 10,
+    borderWidth: 1,
   },
   continueButtonText: {
     textAlign: 'center',
@@ -167,6 +171,24 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     lineHeight: 20,
+  },
+  footerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  styledButton: {
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#1742FB',
+  },
+  signupMessageLine: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  signupTitle: {
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

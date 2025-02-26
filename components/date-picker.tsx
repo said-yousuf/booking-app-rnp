@@ -5,42 +5,41 @@ import DateTimePicker, {
   getDefaultStyles,
 } from 'react-native-ui-datepicker';
 
-export function CalendarInput() {
+interface CalendarInputProps {
+  value?: DateType;
+  onChange: (date: DateType) => void;
+}
+
+export function CalendarInput({ value, onChange }: CalendarInputProps) {
   const defaultStyles = getDefaultStyles();
-  const [selected, setSelected] = useState<DateType>();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleDateChange = ({ date }: { date: DateType }) => {
-    setSelected(date);
+    onChange(date);
     setModalVisible(false);
   };
 
   return (
     <View>
-      {/* Input Field */}
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
         style={styles.input}
       >
         <Text style={styles.inputText}>
-          {selected
-            ? (selected instanceof Date
-                ? selected
-                : selected instanceof Date
-                ? selected
-                : new Date(selected as string)
-              ).toLocaleDateString()
+          {value
+            ? value instanceof Date
+              ? value.toLocaleDateString()
+              : new Date(value as string).toLocaleDateString()
             : 'Select Date'}
         </Text>
       </TouchableOpacity>
 
-      {/* Modal with Date Picker */}
       <Modal visible={modalVisible} transparent animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.pickerContainer}>
             <DateTimePicker
               mode="single"
-              date={selected}
+              date={value}
               onChange={handleDateChange}
               styles={defaultStyles}
             />
@@ -65,11 +64,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: '#D1D1D1',
     borderWidth: 1,
-    color: '#857F72',
   },
   inputText: {
     fontSize: 14,
-
     color: '#857F72',
   },
   modalContainer: {

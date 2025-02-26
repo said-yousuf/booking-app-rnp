@@ -29,7 +29,7 @@ export default function App() {
 
       <TouchableOpacity
         style={styles.onboarding_button}
-        onPress={() => router.navigate('/(root)/(auth)/sign-up')}
+        onPress={() => router.navigate('/(root)/(auth)/path')}
       >
         <Text style={styles.onboarding_button_text}>Get Started</Text>
       </TouchableOpacity>

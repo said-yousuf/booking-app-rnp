@@ -1,23 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 
-const PhoneNumberInput = () => {
-  const phoneInput = useRef(null);
-  const [phoneNumber, setPhoneNumber] = useState('');
+interface PhoneNumberInputProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const PhoneNumberInput = ({ value, onChange }: PhoneNumberInputProps) => {
+  const phoneInput = useRef<PhoneInput>(null);
 
   return (
     <>
       <Text style={styles.label}>Phone Number</Text>
-
       <PhoneInput
         ref={phoneInput}
-        defaultValue={phoneNumber}
         defaultCode="US"
         layout="first"
-        onChangeText={(text) => {
-          setPhoneNumber(text);
-        }}
+        value={value}
+        onChangeText={onChange}
         containerStyle={styles.phoneContainer}
         textContainerStyle={styles.textInput}
       />
@@ -37,8 +38,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: '#D1D1D1',
     borderWidth: 1,
-    fontSize: 14,
-    color: '#857F72',
   },
   textInput: {
     paddingVertical: 0,
