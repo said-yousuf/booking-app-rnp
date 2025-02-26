@@ -1,48 +1,26 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CountryPicker } from 'react-native-country-codes-picker';
 
-interface PhoneNumberInputProps {
-  countryCode: string;
-  phoneNumber: string;
-  onChangeCountryCode: (value: string) => void;
-  onChangePhoneNumber: (value: string) => void;
+interface CountryPickerProps {
+  value: string;
+  onChange: (value: string) => void;
 }
 
-const PhoneNumberInput = ({
-  countryCode,
-  phoneNumber,
-  onChangeCountryCode,
-  onChangePhoneNumber,
-}: PhoneNumberInputProps) => {
+const CountryPickerComponent = ({ value, onChange }: CountryPickerProps) => {
   const [show, setShow] = useState(false);
 
   return (
-    <View style={styles.container}>
-      {/* Country Code Picker */}
+    <View>
+      {/* Button styled similar to your input field */}
       <TouchableOpacity
         onPress={() => setShow(true)}
-        style={styles.countryCodeButton}
+        style={styles.pickerButton}
       >
-        <Text style={styles.countryCodeText}>
-          {countryCode ? countryCode : '+Code'}
+        <Text style={styles.pickerButtonText}>
+          {value ? value : 'Select Country'}
         </Text>
       </TouchableOpacity>
-
-      {/* Phone Number Input */}
-      <TextInput
-        style={styles.phoneInput}
-        placeholder="Enter phone number"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={onChangePhoneNumber}
-      />
 
       {/* Country Picker Modal */}
       <CountryPicker
@@ -58,7 +36,7 @@ const PhoneNumberInput = ({
           countryButtonStyles: styles.countryButton,
         }}
         pickerButtonOnPress={(item) => {
-          onChangeCountryCode(item.dial_code); // Update country code with the dial code
+          onChange(item.name.en); // Pass selected country name to onChange
           setShow(false);
         }}
       />
@@ -67,35 +45,24 @@ const PhoneNumberInput = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  pickerButton: {
+    width: '100%',
+    backgroundColor: '#FFF',
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 8,
     borderColor: '#D1D1D1',
     borderWidth: 1,
-    borderRadius: 8,
-    backgroundColor: '#FFF',
-    paddingHorizontal: 10,
-    height: 60,
-  },
-  countryCodeButton: {
-    paddingRight: 10,
-    borderRightWidth: 1,
-    borderColor: '#D1D1D1',
     justifyContent: 'center',
   },
-  countryCodeText: {
-    fontSize: 14,
-    color: '#857F72',
-  },
-  phoneInput: {
-    flex: 1,
-    paddingLeft: 10,
+  pickerButtonText: {
     fontSize: 14,
     color: '#857F72',
   },
   modal: {
     maxHeight: '60%',
     backgroundColor: '#FFF',
+    borderRadius: 8,
   },
   textInput: {
     height: 50,
@@ -119,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhoneNumberInput;
+export default CountryPickerComponent;

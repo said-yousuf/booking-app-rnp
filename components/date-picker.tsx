@@ -19,6 +19,13 @@ export function CalendarInput({ value, onChange }: CalendarInputProps) {
     setModalVisible(false);
   };
 
+  // Always provide a valid date to DateTimePicker
+  const currentDate = value
+    ? value instanceof Date
+      ? value
+      : new Date(value as string)
+    : new Date();
+
   return (
     <View>
       <TouchableOpacity
@@ -26,11 +33,7 @@ export function CalendarInput({ value, onChange }: CalendarInputProps) {
         style={styles.input}
       >
         <Text style={styles.inputText}>
-          {value
-            ? value instanceof Date
-              ? value.toLocaleDateString()
-              : new Date(value as string).toLocaleDateString()
-            : 'Select Date'}
+          {value ? currentDate.toLocaleDateString() : 'Select Date'}
         </Text>
       </TouchableOpacity>
 
@@ -39,7 +42,7 @@ export function CalendarInput({ value, onChange }: CalendarInputProps) {
           <View style={styles.pickerContainer}>
             <DateTimePicker
               mode="single"
-              date={value}
+              date={currentDate}
               onChange={handleDateChange}
               styles={defaultStyles}
             />

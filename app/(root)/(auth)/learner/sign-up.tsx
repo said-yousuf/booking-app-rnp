@@ -2,7 +2,7 @@ import { CalendarInput } from '@/components/date-picker';
 import PhoneNumberInput from '@/components/phone-number-input';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
-import React, { useRef } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Image,
@@ -18,22 +18,32 @@ interface SignUpFormData {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber: {
+    countryCode: string;
+    number: string;
+  };
   dateOfBirth: string;
   address: string;
 }
 
 const SignUp = () => {
-  const phoneInput = useRef(null);
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormData>();
+  } = useForm<SignUpFormData>({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: { countryCode: '', number: '' },
+      dateOfBirth: '',
+      address: '',
+    },
+  });
 
   const onSubmit = (data: SignUpFormData) => {
     console.log('Form Data:', data);
-    // You can add your validation or API calls here before navigating.
     router.navigate('/(root)/(auth)/otp');
   };
 
@@ -71,7 +81,7 @@ const SignUp = () => {
                     placeholder="Enter your first name"
                     style={styles.input}
                     onBlur={onBlur}
-                    onChange={onChange}
+                    onChangeText={onChange}
                     value={value}
                   />
                 )}
@@ -133,16 +143,33 @@ const SignUp = () => {
 
           {/* Phone Number Input */}
           <View style={styles.inputContainer}>
+            <Text style={styles.label}>Phone Number</Text>
             <Controller
               name="phoneNumber"
               control={control}
-              rules={{ required: 'Phone number is required.' }}
+              rules={{
+                validate: (value) =>
+                  value.countryCode && value.number
+                    ? true
+                    : 'Phone number is required.',
+              }}
               render={({ field: { onChange, value } }) => (
-                <PhoneNumberInput value={value} onChange={onChange} />
+                <PhoneNumberInput
+                  countryCode={value.countryCode}
+                  phoneNumber={value.number}
+                  onChangeCountryCode={(code) =>
+                    onChange({ ...value, countryCode: code })
+                  }
+                  onChangePhoneNumber={(num) =>
+                    onChange({ ...value, number: num })
+                  }
+                />
               )}
             />
             {errors.phoneNumber && (
-              <Text style={{ color: 'red' }}>{errors.phoneNumber.message}</Text>
+              <Text style={{ color: 'red' }}>
+                {errors.phoneNumber.message as string}
+              </Text>
             )}
           </View>
 
