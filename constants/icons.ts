@@ -8,6 +8,7 @@ import location from '@/assets/icons/location.png';
 import lock from '@/assets/icons/lock.png';
 import logo from '@/assets/icons/logo.png';
 import mail from '@/assets/icons/mail.png';
+import openGallary from '@/assets/icons/open-gallary.png';
 import status from '@/assets/icons/status.png';
 import vehicle from '@/assets/icons/vehicle.png';
 
@@ -24,4 +25,5 @@ export default {
   license,
   location,
   vehicle,
+  openGallary,
 };

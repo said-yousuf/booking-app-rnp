@@ -1,5 +1,7 @@
 import BackButton from '@/components/back-button';
+import { CalendarInput } from '@/components/date-picker';
 import DetailSection from '@/components/detail-section';
+import ImagePickerComponent from '@/components/image-picker';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';
@@ -15,11 +17,10 @@ import {
 } from 'react-native';
 
 interface LicenseDetailsFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
+  licenseNumber: string;
+  issueDate: Date;
+  expireDate: Date;
+  photo: string | null;
 }
 
 const LicenseDetails = () => {
@@ -33,6 +34,7 @@ const LicenseDetails = () => {
     console.log('FormData: ', data);
     router.navigate('/(root)/(auth)/instructor/vehicle-details');
   };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -40,9 +42,7 @@ const LicenseDetails = () => {
           {/* Header */}
           <View style={styles.header}>
             <BackButton />
-
             <Text>3/5</Text>
-
             <Image source={icons.status} style={styles.iconStatus} />
           </View>
 
@@ -54,14 +54,14 @@ const LicenseDetails = () => {
           />
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>First Name</Text>
+            <Text style={styles.label}>License Number</Text>
             <Controller
-              name="firstName"
+              name="licenseNumber"
               control={control}
-              rules={{ required: 'First Name is required.' }}
+              rules={{ required: 'License Number is required.' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your First Name"
+                  placeholder="Enter your License Number"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -69,83 +69,57 @@ const LicenseDetails = () => {
                 />
               )}
             />
-            {errors.firstName && (
-              <Text style={{ color: 'red' }}>{errors.firstName.message}</Text>
+            {errors.licenseNumber && (
+              <Text style={{ color: 'red' }}>
+                {errors.licenseNumber.message}
+              </Text>
+            )}
+          </View>
+
+          {/* Issue Date Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Issue Date</Text>
+            <Controller
+              name="issueDate"
+              control={control}
+              rules={{ required: 'Issue date is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <CalendarInput value={value} onChange={onChange} />
+              )}
+            />
+            {errors.issueDate && (
+              <Text style={{ color: 'red' }}>{errors.issueDate.message}</Text>
+            )}
+          </View>
+
+          {/* Expire Date Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Expire Date</Text>
+            <Controller
+              name="expireDate"
+              control={control}
+              rules={{ required: 'Expire date is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <CalendarInput value={value} onChange={onChange} />
+              )}
+            />
+            {errors.expireDate && (
+              <Text style={{ color: 'red' }}>{errors.expireDate.message}</Text>
             )}
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Last Name</Text>
+            <Text style={styles.label}>License Photo</Text>
             <Controller
-              name="lastName"
+              name="photo"
               control={control}
-              rules={{ required: 'Last Name is required' }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Enter your Last Name"
-                  style={styles.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
+              rules={{ required: 'License photo is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <ImagePickerComponent value={value} onChange={onChange} />
               )}
             />
-            {errors.firstName && (
-              <Text style={{ color: 'red' }}>{errors.firstName.message}</Text>
-            )}
-          </View>
-
-          {/* Email Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email Address</Text>
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: 'Email address is required.',
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: 'Invalid email address.',
-                },
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Enter your email address"
-                  style={styles.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  keyboardType="email-address"
-                />
-              )}
-            />
-            {errors.email && (
-              <Text style={{ color: 'red' }}>{errors.email.message}</Text>
-            )}
-          </View>
-
-          {/* Password Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password</Text>
-            <Controller
-              name="password"
-              control={control}
-              rules={{
-                required: 'Password is required.',
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Enter your Password"
-                  style={styles.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  keyboardType="visible-password"
-                />
-              )}
-            />
-            {errors.password && (
-              <Text style={{ color: 'red' }}>{errors.password.message}</Text>
+            {errors.photo && (
+              <Text style={{ color: 'red' }}>{errors.photo.message}</Text>
             )}
           </View>
         </View>
@@ -167,7 +141,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F2EA',
     flex: 1,
     paddingHorizontal: 24,
-    position: 'relative',
   },
   header: {
     flexDirection: 'row',
@@ -178,28 +151,6 @@ const styles = StyleSheet.create({
   iconStatus: {
     width: 56,
     height: 6,
-  },
-  titleSection: {
-    marginVertical: 20,
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '600',
-    lineHeight: 39,
-  },
-  subtitle: {
-    fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 26,
-    color: '#625D52',
-  },
-  inputWrapper: {
-    flex: 1,
   },
   label: {
     fontSize: 14,
@@ -242,4 +193,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
+
 export default LicenseDetails;
