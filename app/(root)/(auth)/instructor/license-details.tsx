@@ -1,7 +1,6 @@
 import BackButton from '@/components/back-button';
 import { CalendarInput } from '@/components/date-picker';
 import DetailSection from '@/components/detail-section';
-import ImagePickerComponent from '@/components/image-picker';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';
@@ -108,7 +107,7 @@ const LicenseDetails = () => {
             )}
           </View>
 
-          <View style={styles.inputContainer}>
+          {/* <View style={styles.inputContainer}>
             <Text style={styles.label}>License Photo</Text>
             <Controller
               name="photo"
@@ -121,7 +120,7 @@ const LicenseDetails = () => {
             {errors.photo && (
               <Text style={{ color: 'red' }}>{errors.photo.message}</Text>
             )}
-          </View>
+          </View> */}
         </View>
       </ScrollView>
       <View style={styles.buttonWrapper}>

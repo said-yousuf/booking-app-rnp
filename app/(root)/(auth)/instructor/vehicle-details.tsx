@@ -15,11 +15,9 @@ import {
 } from 'react-native';
 
 interface VehicleDetailsFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
+  model: string;
+  plateNumber: string;
+  insuranceNumber: string;
 }
 
 const VehicleDetails = () => {
@@ -41,27 +39,27 @@ const VehicleDetails = () => {
           <View style={styles.header}>
             <BackButton />
 
-            <Text>1/5</Text>
+            <Text>4/5</Text>
 
             <Image source={icons.status} style={styles.iconStatus} />
           </View>
 
           {/* Title Section */}
           <DetailSection
-            title="Details"
+            title="Vehicle Details"
             subtitle="Let’s Get you onboard! Tell us about yourself"
             icon="vehicle"
           />
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>First Name</Text>
+            <Text style={styles.label}>Model</Text>
             <Controller
-              name="firstName"
+              name="model"
               control={control}
-              rules={{ required: 'First Name is required.' }}
+              rules={{ required: 'Model is required.' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your First Name"
+                  placeholder="Enter your Model"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -69,20 +67,20 @@ const VehicleDetails = () => {
                 />
               )}
             />
-            {errors.firstName && (
-              <Text style={{ color: 'red' }}>{errors.firstName.message}</Text>
+            {errors.model && (
+              <Text style={{ color: 'red' }}>{errors.model.message}</Text>
             )}
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Last Name</Text>
+            <Text style={styles.label}>Plate Number</Text>
             <Controller
-              name="lastName"
+              name="plateNumber"
               control={control}
-              rules={{ required: 'Last Name is required' }}
+              rules={{ required: 'Plate Number is required' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your Last Name"
+                  placeholder="Enter your Plate Number"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -90,62 +88,31 @@ const VehicleDetails = () => {
                 />
               )}
             />
-            {errors.firstName && (
-              <Text style={{ color: 'red' }}>{errors.firstName.message}</Text>
+            {errors.plateNumber && (
+              <Text style={{ color: 'red' }}>{errors.plateNumber.message}</Text>
             )}
           </View>
 
-          {/* Email Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email Address</Text>
+            <Text style={styles.label}>Insurance Number</Text>
             <Controller
-              name="email"
+              name="insuranceNumber"
               control={control}
-              rules={{
-                required: 'Email address is required.',
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: 'Invalid email address.',
-                },
-              }}
+              rules={{ required: 'Insurance Number is required' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your email address"
+                  placeholder="Enter your Insurance Number"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  keyboardType="email-address"
                 />
               )}
             />
-            {errors.email && (
-              <Text style={{ color: 'red' }}>{errors.email.message}</Text>
-            )}
-          </View>
-
-          {/* Password Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password</Text>
-            <Controller
-              name="password"
-              control={control}
-              rules={{
-                required: 'Password is required.',
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Enter your Password"
-                  style={styles.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  keyboardType="visible-password"
-                />
-              )}
-            />
-            {errors.password && (
-              <Text style={{ color: 'red' }}>{errors.password.message}</Text>
+            {errors.insuranceNumber && (
+              <Text style={{ color: 'red' }}>
+                {errors.insuranceNumber.message}
+              </Text>
             )}
           </View>
         </View>
