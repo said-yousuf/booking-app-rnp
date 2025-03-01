@@ -44,14 +44,14 @@ const SignIn = () => {
       <View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => router.navigate('/(root)/(auth)/sign-in')}
+          onPress={() => router.navigate('/(root)/(instructor)/(tabs)')}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.continueButtonContainer}
-          onPress={() => router.navigate('/(root)/(auth)/sign-in')}
+          onPress={() => router.navigate('/(root)/(learner)/(tabs)')}
         >
           <Text style={styles.continueButtonText}>
             Continue with Phone Number

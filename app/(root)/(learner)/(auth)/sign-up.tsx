@@ -44,7 +44,7 @@ const SignUp = () => {
 
   const onSubmit = (data: SignUpFormData) => {
     console.log('Form Data:', data);
-    router.navigate('/(root)/(auth)/otp');
+    router.navigate('/auth/otp');
   };
 
   return (

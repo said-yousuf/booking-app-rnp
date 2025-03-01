@@ -1,5 +1,6 @@
 import BackButton from '@/components/back-button';
 import DetailSection from '@/components/detail-section';
+import PhoneNumberInput from '@/components/phone-number-input';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';
@@ -14,22 +15,35 @@ import {
   View,
 } from 'react-native';
 
-interface VehicleDetailsFormData {
-  model: string;
-  plateNumber: string;
-  insuranceNumber: string;
+interface ProfileDetailsFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: {
+    countryCode: string;
+    number: string;
+  };
+  password: string;
 }
 
-const VehicleDetails = () => {
+const ProfileDetails = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<VehicleDetailsFormData>();
+  } = useForm<ProfileDetailsFormData>({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: { countryCode: '', number: '' },
+      password: '',
+    },
+  });
 
-  const onSubmit = (data: VehicleDetailsFormData) => {
+  const onSubmit = (data: ProfileDetailsFormData) => {
     console.log('FormData: ', data);
-    router.navigate('/(root)/(auth)/instructor/bank-details');
+    router.navigate('/(root)/(instructor)/(auth)/location-details');
   };
   return (
     <View style={{ flex: 1 }}>
@@ -39,27 +53,27 @@ const VehicleDetails = () => {
           <View style={styles.header}>
             <BackButton />
 
-            <Text>4/5</Text>
+            <Text>1/5</Text>
 
             <Image source={icons.status} style={styles.iconStatus} />
           </View>
 
           {/* Title Section */}
           <DetailSection
-            title="Vehicle Details"
-            subtitle="Let’s Get you onboard! Tell us about yourself"
-            icon="vehicle"
+            title="Profile Details"
+            subtitle="Lets Get you onboard! Tell us about yourself"
+            icon="avatar2"
           />
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Model</Text>
+            <Text style={styles.label}>First Name</Text>
             <Controller
-              name="model"
+              name="firstName"
               control={control}
-              rules={{ required: 'Model is required.' }}
+              rules={{ required: 'First Name is required.' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your Model"
+                  placeholder="Enter your First Name"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -67,20 +81,20 @@ const VehicleDetails = () => {
                 />
               )}
             />
-            {errors.model && (
-              <Text style={{ color: 'red' }}>{errors.model.message}</Text>
+            {errors.firstName && (
+              <Text style={{ color: 'red' }}>{errors.firstName.message}</Text>
             )}
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Plate Number</Text>
+            <Text style={styles.label}>Last Name</Text>
             <Controller
-              name="plateNumber"
+              name="lastName"
               control={control}
-              rules={{ required: 'Plate Number is required' }}
+              rules={{ required: 'Last Name is required' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your Plate Number"
+                  placeholder="Enter your Last Name"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -88,31 +102,94 @@ const VehicleDetails = () => {
                 />
               )}
             />
-            {errors.plateNumber && (
-              <Text style={{ color: 'red' }}>{errors.plateNumber.message}</Text>
+            {errors.lastName && (
+              <Text style={{ color: 'red' }}>{errors.lastName.message}</Text>
             )}
           </View>
 
+          {/* Email Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Insurance Number</Text>
+            <Text style={styles.label}>Email Address</Text>
             <Controller
-              name="insuranceNumber"
+              name="email"
               control={control}
-              rules={{ required: 'Insurance Number is required' }}
+              rules={{
+                required: 'Email address is required.',
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: 'Invalid email address.',
+                },
+              }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your Insurance Number"
+                  placeholder="Enter your email address"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  keyboardType="email-address"
                 />
               )}
             />
-            {errors.insuranceNumber && (
+            {errors.email && (
+              <Text style={{ color: 'red' }}>{errors.email.message}</Text>
+            )}
+          </View>
+
+          {/* Phone Number Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Phone Number</Text>
+            <Controller
+              name="phoneNumber"
+              control={control}
+              rules={{
+                validate: (value) =>
+                  value.countryCode && value.number
+                    ? true
+                    : 'Phone number is required.',
+              }}
+              render={({ field: { onChange, value } }) => (
+                <PhoneNumberInput
+                  countryCode={value.countryCode}
+                  phoneNumber={value.number}
+                  onChangeCountryCode={(code) =>
+                    onChange({ ...value, countryCode: code })
+                  }
+                  onChangePhoneNumber={(num) =>
+                    onChange({ ...value, number: num })
+                  }
+                />
+              )}
+            />
+            {errors.phoneNumber && (
               <Text style={{ color: 'red' }}>
-                {errors.insuranceNumber.message}
+                {errors.phoneNumber.message as string}
               </Text>
+            )}
+          </View>
+
+          {/* Password Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Password</Text>
+            <Controller
+              name="password"
+              control={control}
+              rules={{
+                required: 'Password is required.',
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  placeholder="Enter your Password"
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  keyboardType="visible-password"
+                />
+              )}
+            />
+            {errors.password && (
+              <Text style={{ color: 'red' }}>{errors.password.message}</Text>
             )}
           </View>
         </View>
@@ -209,4 +286,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-export default VehicleDetails;
+export default ProfileDetails;

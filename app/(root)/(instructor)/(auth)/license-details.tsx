@@ -1,4 +1,5 @@
 import BackButton from '@/components/back-button';
+import { CalendarInput } from '@/components/date-picker';
 import DetailSection from '@/components/detail-section';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
@@ -14,24 +15,25 @@ import {
   View,
 } from 'react-native';
 
-interface BankDetailsFormData {
-  bankName: string;
-  accountName: string;
-  transitNumber: string;
-  institutionNumber: string;
+interface LicenseDetailsFormData {
+  licenseNumber: string;
+  issueDate: Date;
+  expireDate: Date;
+  photo: string | null;
 }
 
-const BankDetails = () => {
+const LicenseDetails = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<BankDetailsFormData>();
+  } = useForm<LicenseDetailsFormData>();
 
-  const onSubmit = (data: BankDetailsFormData) => {
+  const onSubmit = (data: LicenseDetailsFormData) => {
     console.log('FormData: ', data);
-    router.navigate('/(root)/(auth)/instructor/location-details');
+    router.navigate('/(root)/(instructor)/(auth)/vehicle-details');
   };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -39,28 +41,26 @@ const BankDetails = () => {
           {/* Header */}
           <View style={styles.header}>
             <BackButton />
-
-            <Text>5/5</Text>
-
+            <Text>3/5</Text>
             <Image source={icons.status} style={styles.iconStatus} />
           </View>
 
           {/* Title Section */}
           <DetailSection
-            title="Bank Details"
-            subtitle="Your card must match the verification code."
-            icon="bank"
+            title="License Details"
+            subtitle="Let’s Get you onboard! Tell us about yourself"
+            icon="license"
           />
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Bank Name</Text>
+            <Text style={styles.label}>License Number</Text>
             <Controller
-              name="bankName"
+              name="licenseNumber"
               control={control}
-              rules={{ required: 'Bank Name is required.' }}
+              rules={{ required: 'License Number is required.' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your Bank Name"
+                  placeholder="Enter your License Number"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -68,77 +68,59 @@ const BankDetails = () => {
                 />
               )}
             />
-            {errors.bankName && (
-              <Text style={{ color: 'red' }}>{errors.bankName.message}</Text>
-            )}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Account Name</Text>
-            <Controller
-              name="accountName"
-              control={control}
-              rules={{ required: 'Account Name is required' }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Enter your Account Name"
-                  style={styles.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-            />
-            {errors.accountName && (
-              <Text style={{ color: 'red' }}>{errors.accountName.message}</Text>
-            )}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Transit Number</Text>
-            <Controller
-              name="transitNumber"
-              control={control}
-              rules={{ required: 'Transit Number is required' }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Enter your Transit Number"
-                  style={styles.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-            />
-            {errors.transitNumber && (
+            {errors.licenseNumber && (
               <Text style={{ color: 'red' }}>
-                {errors.transitNumber.message}
+                {errors.licenseNumber.message}
               </Text>
             )}
           </View>
 
+          {/* Issue Date Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Institution Name</Text>
+            <Text style={styles.label}>Issue Date</Text>
             <Controller
-              name="institutionNumber"
+              name="issueDate"
               control={control}
-              rules={{ required: 'Institution Name is required' }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Enter your Institution Name"
-                  style={styles.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
+              rules={{ required: 'Issue date is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <CalendarInput value={value} onChange={onChange} />
               )}
             />
-            {errors.institutionNumber && (
-              <Text style={{ color: 'red' }}>
-                {errors.institutionNumber.message}
-              </Text>
+            {errors.issueDate && (
+              <Text style={{ color: 'red' }}>{errors.issueDate.message}</Text>
             )}
           </View>
+
+          {/* Expire Date Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Expire Date</Text>
+            <Controller
+              name="expireDate"
+              control={control}
+              rules={{ required: 'Expire date is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <CalendarInput value={value} onChange={onChange} />
+              )}
+            />
+            {errors.expireDate && (
+              <Text style={{ color: 'red' }}>{errors.expireDate.message}</Text>
+            )}
+          </View>
+
+          {/* <View style={styles.inputContainer}>
+            <Text style={styles.label}>License Photo</Text>
+            <Controller
+              name="photo"
+              control={control}
+              rules={{ required: 'License photo is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <ImagePickerComponent value={value} onChange={onChange} />
+              )}
+            />
+            {errors.photo && (
+              <Text style={{ color: 'red' }}>{errors.photo.message}</Text>
+            )}
+          </View> */}
         </View>
       </ScrollView>
       <View style={styles.buttonWrapper}>
@@ -158,7 +140,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F2EA',
     flex: 1,
     paddingHorizontal: 24,
-    position: 'relative',
   },
   header: {
     flexDirection: 'row',
@@ -169,28 +150,6 @@ const styles = StyleSheet.create({
   iconStatus: {
     width: 56,
     height: 6,
-  },
-  titleSection: {
-    marginVertical: 20,
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '600',
-    lineHeight: 39,
-  },
-  subtitle: {
-    fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 26,
-    color: '#625D52',
-  },
-  inputWrapper: {
-    flex: 1,
   },
   label: {
     fontSize: 14,
@@ -233,4 +192,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-export default BankDetails;
+
+export default LicenseDetails;

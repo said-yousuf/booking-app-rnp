@@ -1,5 +1,4 @@
 import BackButton from '@/components/back-button';
-import CountryPickerComponent from '@/components/country-picker';
 import DetailSection from '@/components/detail-section';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
@@ -15,25 +14,23 @@ import {
   View,
 } from 'react-native';
 
-interface ProfileDetailsFormData {
-  country: string;
-  city: string;
-  street: string;
-  postalCode: string;
+interface VehicleDetailsFormData {
+  model: string;
+  plateNumber: string;
+  insuranceNumber: string;
 }
 
-const SignUp = () => {
+const VehicleDetails = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<ProfileDetailsFormData>();
+  } = useForm<VehicleDetailsFormData>();
 
-  const onSubmit = (data: ProfileDetailsFormData) => {
+  const onSubmit = (data: VehicleDetailsFormData) => {
     console.log('FormData: ', data);
-    router.navigate('/(root)/(auth)/instructor/license-details');
+    router.navigate('/(root)/(instructor)/(auth)/bank-details');
   };
-
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -41,43 +38,28 @@ const SignUp = () => {
           {/* Header */}
           <View style={styles.header}>
             <BackButton />
-            <Text>2/5</Text>
+
+            <Text>4/5</Text>
+
             <Image source={icons.status} style={styles.iconStatus} />
           </View>
 
           {/* Title Section */}
           <DetailSection
-            title="Location Details"
+            title="Vehicle Details"
             subtitle="Let’s Get you onboard! Tell us about yourself"
-            icon="location"
+            icon="vehicle"
           />
 
-          {/* Country Picker */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Country</Text>
+            <Text style={styles.label}>Model</Text>
             <Controller
-              name="country"
+              name="model"
               control={control}
-              rules={{ required: 'Country is required.' }}
-              render={({ field: { onChange, value } }) => (
-                <CountryPickerComponent value={value} onChange={onChange} />
-              )}
-            />
-            {errors.country && (
-              <Text style={{ color: 'red' }}>{errors.country.message}</Text>
-            )}
-          </View>
-
-          {/* City Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>City</Text>
-            <Controller
-              name="city"
-              control={control}
-              rules={{ required: 'City is required' }}
+              rules={{ required: 'Model is required.' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your City"
+                  placeholder="Enter your Model"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -85,21 +67,20 @@ const SignUp = () => {
                 />
               )}
             />
-            {errors.city && (
-              <Text style={{ color: 'red' }}>{errors.city.message}</Text>
+            {errors.model && (
+              <Text style={{ color: 'red' }}>{errors.model.message}</Text>
             )}
           </View>
 
-          {/* Street Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Street</Text>
+            <Text style={styles.label}>Plate Number</Text>
             <Controller
-              name="street"
+              name="plateNumber"
               control={control}
-              rules={{ required: 'Street is required.' }}
+              rules={{ required: 'Plate Number is required' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your street address"
+                  placeholder="Enter your Plate Number"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -107,21 +88,20 @@ const SignUp = () => {
                 />
               )}
             />
-            {errors.street && (
-              <Text style={{ color: 'red' }}>{errors.street.message}</Text>
+            {errors.plateNumber && (
+              <Text style={{ color: 'red' }}>{errors.plateNumber.message}</Text>
             )}
           </View>
 
-          {/* Postal Code Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Postal</Text>
+            <Text style={styles.label}>Insurance Number</Text>
             <Controller
-              name="postalCode"
+              name="insuranceNumber"
               control={control}
-              rules={{ required: 'Postal Code is required.' }}
+              rules={{ required: 'Insurance Number is required' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your postal code"
+                  placeholder="Enter your Insurance Number"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -129,13 +109,14 @@ const SignUp = () => {
                 />
               )}
             />
-            {errors.postalCode && (
-              <Text style={{ color: 'red' }}>{errors.postalCode.message}</Text>
+            {errors.insuranceNumber && (
+              <Text style={{ color: 'red' }}>
+                {errors.insuranceNumber.message}
+              </Text>
             )}
           </View>
         </View>
       </ScrollView>
-
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
           style={styles.buttonContainer}
@@ -164,6 +145,28 @@ const styles = StyleSheet.create({
   iconStatus: {
     width: 56,
     height: 6,
+  },
+  titleSection: {
+    marginVertical: 20,
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    marginBottom: 30,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: '600',
+    lineHeight: 39,
+  },
+  subtitle: {
+    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 26,
+    color: '#625D52',
+  },
+  inputWrapper: {
+    flex: 1,
   },
   label: {
     fontSize: 14,
@@ -206,5 +209,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-
-export default SignUp;
+export default VehicleDetails;

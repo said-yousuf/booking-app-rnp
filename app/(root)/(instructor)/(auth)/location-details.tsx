@@ -1,5 +1,5 @@
 import BackButton from '@/components/back-button';
-import { CalendarInput } from '@/components/date-picker';
+import CountryPickerComponent from '@/components/country-picker';
 import DetailSection from '@/components/detail-section';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
@@ -15,23 +15,23 @@ import {
   View,
 } from 'react-native';
 
-interface LicenseDetailsFormData {
-  licenseNumber: string;
-  issueDate: Date;
-  expireDate: Date;
-  photo: string | null;
+interface ProfileDetailsFormData {
+  country: string;
+  city: string;
+  street: string;
+  postalCode: string;
 }
 
-const LicenseDetails = () => {
+const SignUp = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<LicenseDetailsFormData>();
+  } = useForm<ProfileDetailsFormData>();
 
-  const onSubmit = (data: LicenseDetailsFormData) => {
+  const onSubmit = (data: ProfileDetailsFormData) => {
     console.log('FormData: ', data);
-    router.navigate('/(root)/(auth)/instructor/vehicle-details');
+    router.navigate('/(root)/(instructor)/(auth)/license-details');
   };
 
   return (
@@ -41,26 +41,43 @@ const LicenseDetails = () => {
           {/* Header */}
           <View style={styles.header}>
             <BackButton />
-            <Text>3/5</Text>
+            <Text>2/5</Text>
             <Image source={icons.status} style={styles.iconStatus} />
           </View>
 
           {/* Title Section */}
           <DetailSection
-            title="License Details"
+            title="Location Details"
             subtitle="Let’s Get you onboard! Tell us about yourself"
-            icon="license"
+            icon="location"
           />
 
+          {/* Country Picker */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>License Number</Text>
+            <Text style={styles.label}>Country</Text>
             <Controller
-              name="licenseNumber"
+              name="country"
               control={control}
-              rules={{ required: 'License Number is required.' }}
+              rules={{ required: 'Country is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <CountryPickerComponent value={value} onChange={onChange} />
+              )}
+            />
+            {errors.country && (
+              <Text style={{ color: 'red' }}>{errors.country.message}</Text>
+            )}
+          </View>
+
+          {/* City Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>City</Text>
+            <Controller
+              name="city"
+              control={control}
+              rules={{ required: 'City is required' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  placeholder="Enter your License Number"
+                  placeholder="Enter your City"
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -68,61 +85,57 @@ const LicenseDetails = () => {
                 />
               )}
             />
-            {errors.licenseNumber && (
-              <Text style={{ color: 'red' }}>
-                {errors.licenseNumber.message}
-              </Text>
+            {errors.city && (
+              <Text style={{ color: 'red' }}>{errors.city.message}</Text>
             )}
           </View>
 
-          {/* Issue Date Input */}
+          {/* Street Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Issue Date</Text>
+            <Text style={styles.label}>Street</Text>
             <Controller
-              name="issueDate"
+              name="street"
               control={control}
-              rules={{ required: 'Issue date is required.' }}
-              render={({ field: { onChange, value } }) => (
-                <CalendarInput value={value} onChange={onChange} />
+              rules={{ required: 'Street is required.' }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  placeholder="Enter your street address"
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
               )}
             />
-            {errors.issueDate && (
-              <Text style={{ color: 'red' }}>{errors.issueDate.message}</Text>
+            {errors.street && (
+              <Text style={{ color: 'red' }}>{errors.street.message}</Text>
             )}
           </View>
 
-          {/* Expire Date Input */}
+          {/* Postal Code Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Expire Date</Text>
+            <Text style={styles.label}>Postal</Text>
             <Controller
-              name="expireDate"
+              name="postalCode"
               control={control}
-              rules={{ required: 'Expire date is required.' }}
-              render={({ field: { onChange, value } }) => (
-                <CalendarInput value={value} onChange={onChange} />
+              rules={{ required: 'Postal Code is required.' }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  placeholder="Enter your postal code"
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
               )}
             />
-            {errors.expireDate && (
-              <Text style={{ color: 'red' }}>{errors.expireDate.message}</Text>
+            {errors.postalCode && (
+              <Text style={{ color: 'red' }}>{errors.postalCode.message}</Text>
             )}
           </View>
-
-          {/* <View style={styles.inputContainer}>
-            <Text style={styles.label}>License Photo</Text>
-            <Controller
-              name="photo"
-              control={control}
-              rules={{ required: 'License photo is required.' }}
-              render={({ field: { onChange, value } }) => (
-                <ImagePickerComponent value={value} onChange={onChange} />
-              )}
-            />
-            {errors.photo && (
-              <Text style={{ color: 'red' }}>{errors.photo.message}</Text>
-            )}
-          </View> */}
         </View>
       </ScrollView>
+
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
           style={styles.buttonContainer}
@@ -140,6 +153,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F2EA',
     flex: 1,
     paddingHorizontal: 24,
+    position: 'relative',
   },
   header: {
     flexDirection: 'row',
@@ -193,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LicenseDetails;
+export default SignUp;

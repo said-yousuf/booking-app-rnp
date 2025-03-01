@@ -27,7 +27,7 @@ const Path = () => {
       <View>
         <TouchableOpacity
           style={styles.pathButton}
-          onPress={() => router.navigate('/(root)/(auth)/learner/sign-up')}
+          onPress={() => router.navigate('/(root)/(learner)/(auth)/sign-up')}
         >
           <Text style={styles.pathButtonTitle}>Learner</Text>
           <Text style={styles.pathButtonSubtitle}>
@@ -36,7 +36,7 @@ const Path = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            router.navigate('/(root)/(auth)/instructor/profile-details')
+            router.navigate('/(root)/(instructor)/(auth)/profile-details')
           }
           style={styles.pathButton}
         >
