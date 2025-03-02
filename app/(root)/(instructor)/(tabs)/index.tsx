@@ -1,4 +1,6 @@
+import BookingCard from '@/components/card';
 import DateSelector from '@/components/date-selector';
+import Filter from '@/components/filter';
 import icons from '@/constants/icons';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -22,6 +24,9 @@ const Index = () => {
         </View>
       </View>
       <DateSelector />
+      <Filter />
+
+      <BookingCard />
     </SafeAreaView>
   );
 };
@@ -31,6 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F2EA',
     flex: 1,
     paddingHorizontal: 20,
+    height: '100%',
   },
   headerContainer: {
     flexDirection: 'row',

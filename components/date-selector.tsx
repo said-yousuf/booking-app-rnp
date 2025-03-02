@@ -17,6 +17,7 @@ const DateSelector = () => {
 const styles = StyleSheet.create({
   container: {
     height: 85,
+    marginTop: 20,
   },
   buttonContainer: {
     backgroundColor: 'white',

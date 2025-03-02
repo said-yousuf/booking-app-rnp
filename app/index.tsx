@@ -115,19 +115,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5F2EA',
     alignItems: 'center',
-    padding: 15,
+    paddingHorizontal: 25,
     position: 'relative',
   },
   logo: {
     width: 143,
     height: 39,
     padding: 20,
-    marginBlock: 40,
+    marginVertical: 40,
   },
   onboardingImage: {
     width: 173,
     height: 169,
-    marginBlock: 50,
+    marginVertical: 50,
   },
   onboardingHeading: {
     fontSize: 32,
