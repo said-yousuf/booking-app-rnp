@@ -1,7 +1,6 @@
 import icons from '@/constants/icons';
 import { Tabs } from 'expo-router';
 import { Image, StyleSheet, Text, View } from 'react-native';
-const TabsName = ['Home', 'Package', 'Requests', 'Messages', 'Setting'];
 
 const TabIcon = ({
   focused,

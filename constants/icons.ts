@@ -4,6 +4,7 @@ import avatar2 from '@/assets/icons/avatar2.png';
 import back from '@/assets/icons/back.png';
 import back2 from '@/assets/icons/back2.png';
 import bank from '@/assets/icons/bank.png';
+import bell from '@/assets/icons/bell.png';
 import close from '@/assets/icons/close.png';
 import google from '@/assets/icons/google.png';
 import homeIcon from '@/assets/icons/home.png';
@@ -48,4 +49,5 @@ export default {
   apple,
   searchIcon,
   scheduleIcon,
+  bell,
 };

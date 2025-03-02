@@ -1,6 +1,7 @@
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
   Image,
   StyleSheet,
@@ -11,7 +12,22 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn = () => {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<SignInFormData>();
+
+  const onSubmit = (data: SignInFormData) => {
+    console.log('FormData: ', data);
+    router.navigate('/(root)/(instructor)/(tabs)');
+  };
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -29,29 +45,66 @@ const SignIn = () => {
         </Text>
       </View>
 
-      {/* Email and password Input */}
       <View style={styles.inputContainer}>
-        <Image source={icons.mail} style={styles.mailImage} />
-        <TextInput
-          placeholder="Enter your email address"
-          style={styles.input}
+        <Controller
+          name="email"
+          control={control}
+          rules={{ required: 'Email Address is required.' }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <Image source={icons.mail} style={styles.mailImage} />
+
+              <TextInput
+                placeholder="Enter your Email Address"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            </>
+          )}
         />
-        <Image source={icons.lock} style={styles.lockImage} />
-        <TextInput placeholder="Enter your password" style={styles.input} />
+        {errors.email && (
+          <Text style={{ color: 'red' }}>{errors.email.message}</Text>
+        )}
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: 'Password is required' }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <Image source={icons.lock} style={styles.lockImage} />
+
+              <TextInput
+                placeholder="Enter your Password"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            </>
+          )}
+        />
+        {errors.password && (
+          <Text style={{ color: 'red' }}>{errors.password.message}</Text>
+        )}
       </View>
 
       {/* Login Button */}
       <View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => router.navigate('/(root)/(instructor)/(tabs)')}
+          onPress={handleSubmit(onSubmit)}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.continueButtonContainer}
-          onPress={() => router.navigate('/(root)/(learner)/(tabs)')}
+          onPress={handleSubmit(onSubmit)}
         >
           <Text style={styles.continueButtonText}>
             Continue with Phone Number
@@ -120,7 +173,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: 362,
-    marginBottom: 20,
     position: 'relative',
   },
   mailImage: {
@@ -147,6 +199,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     marginBottom: 10,
+    marginTop: 20,
   },
   buttonText: {
     textAlign: 'center',
