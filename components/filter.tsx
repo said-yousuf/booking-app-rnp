@@ -41,16 +41,7 @@ const Filter = () => {
             onPress={() => handleCategoryPress(item.category)}
           >
             <Image source={item.icon} style={styles.icon} />
-            <Text
-              style={[
-                styles.text,
-                selectedCategory == item.category
-                  ? styles.selectedCategoryText
-                  : styles.unSelectedCategoryText,
-              ]}
-            >
-              {item.title}
-            </Text>
+            <Text style={[styles.text]}>{item.title}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -74,10 +65,8 @@ const styles = StyleSheet.create({
   unSelectedCategory: {
     backgroundColor: '#D3CEC4',
     borderColor: '#0061ff1a',
-    borderWidth: 1,
   },
-  unSelectedCategoryText: {},
-  selectedCategoryText: {},
+
   icon: {
     width: 18,
     height: 18,

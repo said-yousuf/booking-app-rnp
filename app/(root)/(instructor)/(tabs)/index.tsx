@@ -3,12 +3,20 @@ import DateSelector from '@/components/date-selector';
 import Filter from '@/components/filter';
 import icons from '@/constants/icons';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Index = () => {
   return (
     <SafeAreaView style={styles.container}>
+      {/* Header Section */}
       <View style={styles.headerContainer}>
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerTitle}>Welcome back</Text>
@@ -23,10 +31,41 @@ const Index = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <DateSelector />
+
+      <View>
+        <Text style={styles.date}>October 2024</Text>
+      </View>
+
+      {/* Date Selector */}
+      <View>
+        <FlatList
+          data={[
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+          ]}
+          renderItem={() => <DateSelector />}
+          keyExtractor={(item) => item.toString()}
+          horizontal
+          bounces={false}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: 12,
+            gap: 8,
+          }}
+        />
+      </View>
+
+      {/* Filter Section */}
       <Filter />
 
-      <BookingCard />
+      {/* Booking Cards */}
+      <FlatList
+        data={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+        renderItem={() => <BookingCard />}
+        keyExtractor={(item) => item.toString()}
+        numColumns={1}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 };
@@ -68,6 +107,12 @@ const styles = StyleSheet.create({
   headerIconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  date: {
+    fontWeight: '500',
+    fontSize: 14,
+    color: '#73716E',
+    marginTop: 60,
   },
 });
 

@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   bookingCardContainer: {
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 10,
     height: 330,
     width: 362,
     paddingHorizontal: 10,
