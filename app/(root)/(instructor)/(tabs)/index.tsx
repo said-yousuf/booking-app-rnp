@@ -1,6 +1,6 @@
-import BookingCard from '@/components/card';
-import DateSelector from '@/components/date-selector';
-import Filter from '@/components/filter';
+import BookingCard from '@/components/Card';
+import DateSelector from '@/components/Date-Selector';
+import Filter from '@/components/Filter';
 import icons from '@/constants/icons';
 import React from 'react';
 import {

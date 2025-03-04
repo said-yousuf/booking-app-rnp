@@ -1,6 +1,6 @@
-import BackButton from '@/components/back-button';
-import { CalendarInput } from '@/components/date-picker';
-import DetailSection from '@/components/detail-section';
+import BackButton from '@/components/Back-Button';
+import { CalendarInput } from '@/components/Date-Picker';
+import DetailSection from '@/components/Detail-Section';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';

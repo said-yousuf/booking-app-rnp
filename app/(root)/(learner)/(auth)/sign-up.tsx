@@ -1,5 +1,5 @@
-import { CalendarInput } from '@/components/date-picker';
-import PhoneNumberInput from '@/components/phone-number-input';
+import { CalendarInput } from '@/components/Date-Picker';
+import PhoneNumberInput from '@/components/Phone-Number-Input';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';

@@ -1,6 +1,6 @@
-import BackButton from '@/components/back-button';
-import DetailSection from '@/components/detail-section';
-import PhoneNumberInput from '@/components/phone-number-input';
+import BackButton from '@/components/Back-Button';
+import DetailSection from '@/components/Detail-Section';
+import PhoneNumberInput from '@/components/Phone-Number-Input';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';

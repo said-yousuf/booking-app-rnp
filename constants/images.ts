@@ -1,3 +1,4 @@
+import noSchedule from '@/assets/images/no-schedule.png';
 import onboarding1 from '@/assets/images/onboarding-1.png';
 import onboarding2 from '@/assets/images/onboarding-2.png';
 import onboarding3 from '@/assets/images/onboarding-3.png';
@@ -8,4 +9,5 @@ export default {
   onboarding2,
   onboarding3,
   onboarding4,
+  noSchedule,
 };
