@@ -1,7 +1,7 @@
 import icons from '@/constants/icons';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Badge from './badge';
+import Badge from './Badge';
 
 const BookingCard = () => {
   return (
