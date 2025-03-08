@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import NoTraining from './No-Training';
 
 const HourlyPackage = () => {
   return (
     <View>
-      <Text>HourlyPackage</Text>
+      <NoTraining />
     </View>
   );
 };
