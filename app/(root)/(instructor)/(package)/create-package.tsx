@@ -1,4 +1,5 @@
 import TopBar from '@/components/Top-Bar-2';
+import { router } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -14,7 +15,10 @@ const CreatePackage = () => {
 
       {/* Path Buttons */}
       <View>
-        <TouchableOpacity style={styles.pathButton}>
+        <TouchableOpacity
+          style={styles.pathButton}
+          onPress={() => router.navigate('/hourly/step-1')}
+        >
           <Text style={styles.pathButtonTitle}>Hourly Training</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.pathButton}>
@@ -36,6 +40,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     position: 'relative',
     flex: 1,
+    backgroundColor: '#F5F2EA',
   },
   title: {
     fontWeight: '600',

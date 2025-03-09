@@ -55,7 +55,10 @@
     "react-native-ui-datepicker": "^3.0.4",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "ts-pattern": "^5.6.2"
+    "ts-pattern": "^5.6.2",
+    "expo-calendar": "~14.0.6",
+    "@react-native-community/datetimepicker": "8.2.0",
+    "@react-native-picker/picker": "2.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
