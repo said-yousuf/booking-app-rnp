@@ -1,6 +1,7 @@
+import ExcludedDaysSelector from '@/components/Days-Selector';
 import TopBar from '@/components/Top-Bar-2';
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   StyleSheet,
@@ -10,21 +11,22 @@ import {
   View,
 } from 'react-native';
 
-interface SessionFormsData {
-  name: string;
-  description: string;
-  price: number;
-  sessionLocation: string;
+interface CreatePackage {
+  trainingType: string;
+  dateAndTime: string;
+  excludedDays: string[];
 }
 
 const PackageCreation = () => {
+  const [selectedType, setSelectedType] = useState();
+
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<SessionFormsData>();
+  } = useForm<CreatePackage>();
 
-  const onSubmit = (data: SessionFormsData) => {
+  const onSubmit = (data: CreatePackage) => {
     console.log('FormData: ', data);
     router.navigate('/hourly/step-2');
   };
@@ -36,87 +38,65 @@ const PackageCreation = () => {
       <Text style={styles.title}>Create Packages</Text>
       <Text style={styles.subtitle}>Describe your package details</Text>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.text}>Name</Text>
+      {/* <View style={styles.inputContainer}>
+        <Text style={styles.text}>Training Type</Text>
         <Controller
-          name="name"
+          name="trainingType"
           control={control}
-          rules={{ required: 'Name is required' }}
+          rules={{ required: 'Training Type is required' }}
           render={({ field: { onBlur, onChange, value } }) => (
-            <TextInput
-              placeholder="Road test session"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value?.toString()}
+            <Picker
+              selectedValue={selectedType}
+              onValueChange={(value, itemIndex) => setSelectedType(value)}
               style={styles.textInput}
-            />
+              onBlur={onBlur}
+            >
+              <Picker.Item label="G1" value="g1" />
+              <Picker.Item label="G2" value="g2" />
+              <Picker.Item label="Road Test" value="roadTest" />
+            </Picker>
           )}
         />
-        {errors.name && (
-          <Text style={{ color: 'red' }}>{errors.name.message}</Text>
+        {errors.trainingType && (
+          <Text style={{ color: 'red' }}>{errors.trainingType.message}</Text>
         )}
-      </View>
+      </View> */}
 
       <View style={styles.inputContainer}>
-        <Text style={styles.text}>Description</Text>
+        <Text style={styles.text}>Date and Time</Text>
         <Controller
-          name="description"
+          name="dateAndTime"
           control={control}
-          rules={{ required: 'Description is required' }}
+          rules={{ required: 'Date and Time is required' }}
           render={({ field: { onBlur, onChange, value } }) => (
             <TextInput
               style={styles.textInput}
-              placeholder="Enter you vehicle number"
+              placeholder="Enter Date and time"
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
             />
           )}
         />
-        {errors.description && (
-          <Text style={{ color: 'red' }}>{errors.description.message}</Text>
+        {errors.dateAndTime && (
+          <Text style={{ color: 'red' }}>{errors.dateAndTime.message}</Text>
         )}
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.text}>Price</Text>
+        <Text style={styles.text}>Exclude Days</Text>
         <Controller
-          name="price"
+          name="excludedDays"
           control={control}
-          rules={{ required: 'Price is required' }}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <TextInput
-              style={styles.textInput}
-              placeholder="48 Afn"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value?.toString()}
-            />
+          rules={{ required: 'At least one day must be excluded.' }}
+          render={({ field: { onChange, value } }) => (
+            <ExcludedDaysSelector selectedDays={value} onChange={onChange} />
           )}
         />
-        {errors.price && (
-          <Text style={{ color: 'red' }}>{errors.price.message}</Text>
-        )}
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.text}>Session Location</Text>
-        <Controller
-          name="sessionLocation"
-          control={control}
-          rules={{ required: 'Session Location is required' }}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <TextInput
-              style={styles.textInput}
-              placeholder="Main Street 238, Selkirk, Manitoba, R1A 1S2, Canada"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value?.toString()}
-            />
-          )}
-        />
-        {errors.sessionLocation && (
-          <Text style={{ color: 'red' }}>{errors.sessionLocation.message}</Text>
+        {errors.excludedDays && (
+          <Text style={{ color: 'red' }}>
+            {errors.excludedDays.message as string}
+          </Text>
         )}
       </View>
 
