@@ -1,10 +1,6 @@
 import icons from '@/constants/icons';
 import images from '@/constants/images';
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import { useCallback, useMemo, useRef } from 'react';
 import {
@@ -15,7 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
@@ -35,78 +30,77 @@ export default function App() {
   }, []);
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <BottomSheetModalProvider>
-        <SafeAreaView style={styles.container}>
-          <Image source={icons.logo} style={styles.logo} />
-          <Image source={images.onboarding1} style={styles.onboardingImage} />
-          <Text style={styles.onboardingHeading}>
-            Meet your local driving instructor
-          </Text>
-          <Text style={styles.onboardingText}>
-            Connect with certified instructors, schedule lessons, and improve
-            your driving ease
-          </Text>
-          <TouchableOpacity
-            style={styles.onboardingButton}
-            onPress={handlePresentModalPress}
-          >
-            <Text style={styles.onboardingButtonText}>Get Started</Text>
-          </TouchableOpacity>
-          <BottomSheetModal
-            ref={bottomSheetModalRef}
-            onChange={handleSheetChanges}
-            enableDynamicSizing={true}
-          >
-            <BottomSheetView style={styles.contentContainer}>
-              <BottomSheetView style={styles.bottomSheetHeader}>
-                <Image
-                  source={icons.logoWithoutText}
-                  style={styles.logoWithoutText}
-                />
-                <TouchableOpacity onPress={() => handleCloseModelPress()}>
-                  <Image source={icons.close} style={styles.closeIcon} />
-                </TouchableOpacity>
-              </BottomSheetView>
+    <SafeAreaView style={styles.container}>
+      <Image source={icons.logo} style={styles.logo} />
+      <Image source={images.onboarding1} style={styles.onboardingImage} />
+      <Text style={styles.onboardingHeading}>
+        Meet your local driving instructor
+      </Text>
+      <Text style={styles.onboardingText}>
+        Connect with certified instructors, schedule lessons, and improve your
+        driving ease
+      </Text>
+      <TouchableOpacity
+        style={styles.onboardingButton}
+        onPress={handlePresentModalPress}
+      >
+        <Text style={styles.onboardingButtonText}>Get Started</Text>
+      </TouchableOpacity>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        onChange={handleSheetChanges}
+        enableDynamicSizing={true}
+      >
+        <BottomSheetView style={styles.contentContainer}>
+          <BottomSheetView style={styles.bottomSheetHeader}>
+            <Image
+              source={icons.logoWithoutText}
+              style={styles.logoWithoutText}
+            />
+            <TouchableOpacity onPress={() => handleCloseModelPress()}>
+              <Image source={icons.close} style={styles.closeIcon} />
+            </TouchableOpacity>
+          </BottomSheetView>
 
-              <BottomSheetView style={{ marginVertical: 20 }}>
-                <Text style={styles.bottomSheetTitle}>Get Started</Text>
-                <Text style={styles.bottomSheetSubtitle}>
-                  Connect with certified instructors, schedule lessons, and
-                  improve your driving ease
-                </Text>
-              </BottomSheetView>
-              <View style={styles.buttonWrapper}>
-                <TouchableOpacity
-                  style={styles.buttonContainer}
-                  onPress={() => router.navigate('/auth/path')}
-                >
-                  <Text style={styles.buttonText}>Continue with email</Text>
-                </TouchableOpacity>
-              </View>
-              <BottomSheetView style={{ flexDirection: 'row' }}>
-                <TouchableOpacity style={styles.appAuthButtons}>
-                  <Image source={icons.apple} style={styles.appleIcon} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.appAuthButtons}>
-                  <Image source={icons.google} style={styles.googleIcon} />
-                </TouchableOpacity>
-              </BottomSheetView>
-              <BottomSheetView style={styles.bottomSheetFooter}>
-                <Text style={styles.bottomSheetFooterText}>
-                  Already have an account?{' '}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => router.navigate('/auth/sign-in')}
-                >
-                  <Text style={styles.bottomSheetFooterButtonText}>Log in</Text>
-                </TouchableOpacity>
-              </BottomSheetView>
-            </BottomSheetView>
-          </BottomSheetModal>
-        </SafeAreaView>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+          <BottomSheetView style={{ marginVertical: 20 }}>
+            <Text style={styles.bottomSheetTitle}>Get Started</Text>
+            <Text style={styles.bottomSheetSubtitle}>
+              Connect with certified instructors, schedule lessons, and improve
+              your driving ease
+            </Text>
+          </BottomSheetView>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => router.navigate('/auth/path')}
+            >
+              <Text style={styles.buttonText}>Continue with email</Text>
+            </TouchableOpacity>
+          </View>
+          <BottomSheetView style={{ flexDirection: 'row' }}>
+            <TouchableOpacity style={styles.appAuthButtons}>
+              <Image source={icons.apple} style={styles.appleIcon} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.appAuthButtons}>
+              <Image source={icons.google} style={styles.googleIcon} />
+            </TouchableOpacity>
+          </BottomSheetView>
+          <BottomSheetView style={styles.bottomSheetFooter}>
+            <Text style={styles.bottomSheetFooterText}>
+              Already have an account?{' '}
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                router.navigate('/auth/sign-in');
+                handleCloseModelPress();
+              }}
+            >
+              <Text style={styles.bottomSheetFooterButtonText}>Log in</Text>
+            </TouchableOpacity>
+          </BottomSheetView>
+        </BottomSheetView>
+      </BottomSheetModal>
+    </SafeAreaView>
   );
 }
 
