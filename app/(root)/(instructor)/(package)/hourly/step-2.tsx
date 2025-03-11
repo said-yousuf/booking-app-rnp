@@ -4,7 +4,7 @@ import icons from '@/constants/icons';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Picker } from '@react-native-picker/picker';
 import { router } from 'expo-router';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Image,
@@ -17,9 +17,10 @@ import {
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DatePickerModal } from 'react-native-paper-dates';
 
+// Update the interface to use an array for dateAndTime
 interface CreatePackage {
   trainingType: string;
-  dateAndTime: string;
+  dateAndTime: string[]; // now an array for multiple dates
   excludedDays: string[];
 }
 
@@ -31,29 +32,45 @@ const PackageCreation = () => {
     handleSubmit,
     setValue,
   } = useForm<CreatePackage>();
-  const [dates, setDates] = React.useState();
-  const [open, setOpen] = React.useState(false);
+  // Maintain selected dates as Date objects
+  const [dates, setDates] = useState<Date[]>([]);
+  // Control visibility of the DatePickerModal
+  const [open, setOpen] = useState(false);
 
-  const onDismiss = React.useCallback(() => {
+  // Closes the date picker modal
+  const onDismiss = useCallback(() => {
     setOpen(false);
-  }, [setOpen]);
-
-  const onConfirm = React.useCallback((params: any) => {
-    setOpen(false);
-    setDates(params.dates);
-    console.log('[on-change-multi]', params);
   }, []);
 
+  // When the user confirms dates, format them and update the form state
+  const onConfirm = useCallback(
+    (params: any) => {
+      setOpen(false);
+      setDates(params.dates);
+      // Format dates as ISO strings (YYYY-MM-DD)
+      const formattedDates = params.dates.map(
+        (d: Date) => d.toISOString().split('T')[0]
+      );
+      setValue('dateAndTime', formattedDates);
+      console.log('[on-change-multi]', params);
+    },
+    [setValue]
+  );
+
+  // Open the bottom sheet and set the DatePickerModal visible
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
+    setOpen(true);
   }, []);
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
 
+  // Close the bottom sheet and hide the date picker
   const handleCloseModelPress = useCallback(() => {
     bottomSheetModalRef.current?.close();
+    setOpen(false);
   }, []);
 
   const onSubmit = (data: CreatePackage) => {
@@ -62,13 +79,14 @@ const PackageCreation = () => {
   };
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <TopBar />
           <Text style={styles.title}>Create Packages</Text>
           <Text style={styles.subtitle}>Describe your package details</Text>
 
+          {/* Training Type Picker */}
           <View style={styles.inputContainer}>
             <Text style={styles.text}>Training Type</Text>
             <Controller
@@ -98,6 +116,7 @@ const PackageCreation = () => {
             )}
           </View>
 
+          {/* Multiple Dates Field */}
           <View style={styles.inputContainer}>
             <Text style={styles.text}>Date and Time</Text>
             <TouchableOpacity
@@ -112,8 +131,14 @@ const PackageCreation = () => {
                 control={control}
                 rules={{ required: 'Date and Time is required' }}
                 render={({ field: { value } }) => (
-                  <Text style={{ color: value ? '#000' : '#aaa' }}>
-                    {value || 'Enter Date and time'}
+                  <Text
+                    style={{
+                      color: value && value.length > 0 ? '#000' : '#aaa',
+                    }}
+                  >
+                    {value && value.length > 0
+                      ? value.join(', ')
+                      : 'Enter Date and time'}
                   </Text>
                 )}
               />
@@ -125,6 +150,7 @@ const PackageCreation = () => {
             </TouchableOpacity>
           </View>
 
+          {/* Excluded Days Selector */}
           <View style={styles.inputContainer}>
             <Text style={styles.text}>Exclude Days</Text>
             <Controller
@@ -146,6 +172,7 @@ const PackageCreation = () => {
           </View>
         </ScrollView>
 
+        {/* Continue Button */}
         <View style={styles.buttonWrapper}>
           <TouchableOpacity
             style={styles.buttonContainer}
@@ -155,6 +182,8 @@ const PackageCreation = () => {
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Bottom Sheet Modal for Date Picker */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         onChange={handleSheetChanges}
@@ -163,7 +192,7 @@ const PackageCreation = () => {
         <BottomSheetView style={styles.contentContainer}>
           <BottomSheetView style={styles.bottomSheetHeader}>
             <Text style={styles.bottomSheetHeaderText}>Schedule a Date</Text>
-            <TouchableOpacity onPress={() => handleCloseModelPress()}>
+            <TouchableOpacity onPress={handleCloseModelPress}>
               <Image source={icons.close} style={styles.closeIcon} />
             </TouchableOpacity>
           </BottomSheetView>
