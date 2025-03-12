@@ -1,13 +1,11 @@
 import ExcludedDaysSelector from '@/components/Days-Selector';
 import TopBar from '@/components/Top-Bar-2';
-import icons from '@/constants/icons';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { Picker } from '@react-native-picker/picker';
 import { router } from 'expo-router';
 import React, { useCallback, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,11 +14,12 @@ import {
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DatePickerModal } from 'react-native-paper-dates';
+import { CalendarDate } from 'react-native-paper-dates/lib/typescript/Date/Calendar';
 
 // Update the interface to use an array for dateAndTime
 interface CreatePackage {
   trainingType: string;
-  dateAndTime: string[]; // now an array for multiple dates
+  dateAndTime: string[]; // changed to an array for multiple dates
   excludedDays: string[];
 }
 
@@ -42,36 +41,17 @@ const PackageCreation = () => {
     setOpen(false);
   }, []);
 
-  // When the user confirms dates, format them and update the form state
-  const onConfirm = useCallback(
-    (params: any) => {
-      setOpen(false);
-      setDates(params.dates);
-      // Format dates as ISO strings (YYYY-MM-DD)
-      const formattedDates = params.dates.map(
-        (d: Date) => d.toISOString().split('T')[0]
-      );
-      setValue('dateAndTime', formattedDates);
-      console.log('[on-change-multi]', params);
-    },
-    [setValue]
-  );
-
-  // Open the bottom sheet and set the DatePickerModal visible
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-    setOpen(true);
-  }, []);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-  // Close the bottom sheet and hide the date picker
-  const handleCloseModelPress = useCallback(() => {
-    bottomSheetModalRef.current?.close();
+  // Update the onConfirm handler to work with CalendarDate types
+  const onConfirm = ({
+    startDate,
+    endDate,
+  }: {
+    startDate: CalendarDate;
+    endDate: CalendarDate;
+  }) => {
+    setDates([startDate as Date, endDate as Date]);
     setOpen(false);
-  }, []);
+  };
 
   const onSubmit = (data: CreatePackage) => {
     console.log('FormData: ', data);
@@ -120,26 +100,47 @@ const PackageCreation = () => {
           <View style={styles.inputContainer}>
             <Text style={styles.text}>Date and Time</Text>
             <TouchableOpacity
-              onPress={handlePresentModalPress}
               style={[
                 styles.textInput,
                 { justifyContent: 'center', height: 44 },
               ]}
+              onPress={() => setOpen(true)} // ADD THIS
             >
               <Controller
                 name="dateAndTime"
                 control={control}
                 rules={{ required: 'Date and Time is required' }}
                 render={({ field: { value } }) => (
-                  <Text
-                    style={{
-                      color: value && value.length > 0 ? '#000' : '#aaa',
-                    }}
-                  >
-                    {value && value.length > 0
-                      ? value.join(', ')
-                      : 'Enter Date and time'}
-                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        color: value && value.length > 0 ? '#000' : '#aaa',
+                      }}
+                    >
+                      {value && value.length > 0
+                        ? value.join(', ')
+                        : 'Enter Date and time'}
+                    </Text>
+                    <DatePickerModal
+                      disableStatusBarPadding
+                      locale="en"
+                      mode="range"
+                      visible={open}
+                      onDismiss={onDismiss}
+                      startDate={dates[0]}
+                      endDate={dates[1]}
+                      onConfirm={({ startDate, endDate }) => {
+                        // Convert dates to strings and update form state
+                        const start = startDate?.toISOString().split('T')[0];
+                        const end = endDate?.toISOString().split('T')[0];
+                        if (start && end) {
+                          setValue('dateAndTime', [start, end]);
+                          setDates([startDate, endDate]);
+                        }
+                        setOpen(false);
+                      }}
+                    />
+                  </View>
                 )}
               />
               {errors.dateAndTime && (
@@ -182,33 +183,6 @@ const PackageCreation = () => {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* Bottom Sheet Modal for Date Picker */}
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        onChange={handleSheetChanges}
-        enableDynamicSizing={true}
-      >
-        <BottomSheetView style={styles.contentContainer}>
-          <BottomSheetView style={styles.bottomSheetHeader}>
-            <Text style={styles.bottomSheetHeaderText}>Schedule a Date</Text>
-            <TouchableOpacity onPress={handleCloseModelPress}>
-              <Image source={icons.close} style={styles.closeIcon} />
-            </TouchableOpacity>
-          </BottomSheetView>
-          <BottomSheetView>
-            <DatePickerModal
-              disableStatusBarPadding
-              locale="en"
-              mode="multiple"
-              visible={open}
-              onDismiss={onDismiss}
-              dates={dates}
-              onConfirm={onConfirm}
-            />
-          </BottomSheetView>
-        </BottomSheetView>
-      </BottomSheetModal>
     </GestureHandlerRootView>
   );
 };
