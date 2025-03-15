@@ -1,4 +1,4 @@
-import BookingCard from '@/components/Card';
+import { BookingCard } from '@/components/Card';
 import DateSelector from '@/components/Date-Selector';
 import Filter from '@/components/Filter';
 import icons from '@/constants/icons';

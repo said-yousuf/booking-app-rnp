@@ -72,7 +72,10 @@ export default function App() {
           <View style={styles.buttonWrapper}>
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => router.navigate('/auth/path')}
+              onPress={() => {
+                router.navigate('/auth/path');
+                handleCloseModelPress();
+              }}
             >
               <Text style={styles.buttonText}>Continue with email</Text>
             </TouchableOpacity>
@@ -91,7 +94,7 @@ export default function App() {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                router.navigate('/auth/sign-in');
+                router.navigate('/package');
                 handleCloseModelPress();
               }}
             >
@@ -129,12 +132,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
     marginTop: 20,
+    paddingHorizontal: 20,
   },
   onboardingText: {
     fontSize: 16,
     fontWeight: '400',
     lineHeight: 26,
     marginTop: 20,
+    paddingHorizontal: 5,
+    textAlign: 'center',
   },
   onboardingButton: {
     position: 'absolute',

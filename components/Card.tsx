@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Badge from './Badge';
 
-const BookingCard = () => {
+export const BookingCard = () => {
   return (
     <View style={styles.bookingCardContainer}>
       <TouchableOpacity>
@@ -93,5 +93,3 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
 });
-
-export default BookingCard;

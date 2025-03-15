@@ -26,11 +26,11 @@ const CreatePackage = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.buttonWrapper}>
+      {/* <View style={styles.buttonWrapper}>
         <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
-      </View>
+        </TouchableOpacity> 
+      </View> */}
     </View>
   );
 };
