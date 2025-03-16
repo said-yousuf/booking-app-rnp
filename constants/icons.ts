@@ -24,6 +24,7 @@ import messageIcon from '@/assets/icons/message.png';
 import openGallary from '@/assets/icons/open-gallary.png';
 import packageIcon from '@/assets/icons/package.png';
 import personIcon from '@/assets/icons/person.png';
+import plusIcon from '@/assets/icons/plus.png';
 import requestIcon from '@/assets/icons/request.png';
 import scheduleIcon from '@/assets/icons/schedule.png';
 import searchIcon from '@/assets/icons/search.png';
@@ -64,4 +65,5 @@ export default {
   clockIcon,
   closeIcon,
   checkIcon,
+  plusIcon,
 };

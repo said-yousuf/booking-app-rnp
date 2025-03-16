@@ -1,3 +1,4 @@
+import PackageTypesSelector from '@/components/Package-Types-Selector';
 import TopBar from '@/components/Top-Bar-2';
 import { router } from 'expo-router';
 import React from 'react';
@@ -11,23 +12,25 @@ import {
   View,
 } from 'react-native';
 
-interface SessionFormsData {
+interface CustomPackageFormsData {
+  packageType: string[];
   name: string;
   description: string;
   price: number;
   sessionLocation: string;
+  duration: string;
 }
 
-const Session = () => {
+const CustomPackage = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<SessionFormsData>();
+  } = useForm<CustomPackageFormsData>();
 
-  const onSubmit = (data: SessionFormsData) => {
+  const onSubmit = (data: CustomPackageFormsData) => {
     console.log('FormData: ', data);
-    router.navigate('/hourly/step-2');
+    router.navigate('/package');
   };
 
   return (
@@ -35,9 +38,27 @@ const Session = () => {
       <ScrollView>
         <View style={styles.container}>
           <TopBar />
-
-          <Text style={styles.title}>Describe your Session</Text>
+          <Text style={styles.title}>Create Package</Text>
           <Text style={styles.subtitle}>Describe your package details</Text>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>Package Type</Text>
+            <Controller
+              name="packageType"
+              control={control}
+              rules={{ required: 'Package Type is required' }}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <PackageTypesSelector
+                  selectedTypes={value || []}
+                  onChange={onChange}
+                />
+              )}
+            />
+
+            {errors.packageType && (
+              <Text style={{ color: 'red' }}>{errors.packageType.message}</Text>
+            )}
+          </View>
 
           <View style={styles.inputContainer}>
             <Text style={styles.text}>Name</Text>
@@ -124,13 +145,34 @@ const Session = () => {
               </Text>
             )}
           </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>Duration</Text>
+            <Controller
+              name="duration"
+              control={control}
+              rules={{ required: 'Duration is required' }}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="1 Hour"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value?.toString()}
+                />
+              )}
+            />
+            {errors.duration && (
+              <Text style={{ color: 'red' }}>{errors.duration.message}</Text>
+            )}
+          </View>
         </View>
       </ScrollView>
 
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => router.navigate('/hourly/step-2')}
+          onPress={handleSubmit(onSubmit)}
         >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
@@ -138,7 +180,6 @@ const Session = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
@@ -196,4 +237,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Session;
+export default CustomPackage;

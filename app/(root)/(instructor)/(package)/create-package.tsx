@@ -21,7 +21,10 @@ const CreatePackage = () => {
         >
           <Text style={styles.pathButtonTitle}>Hourly Training</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.pathButton}>
+        <TouchableOpacity
+          style={styles.pathButton}
+          onPress={() => router.navigate('/full/custom-package')}
+        >
           <Text style={styles.pathButtonTitle}>Custom Package</Text>
         </TouchableOpacity>
       </View>

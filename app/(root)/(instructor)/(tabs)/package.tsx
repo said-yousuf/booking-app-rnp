@@ -1,9 +1,9 @@
-import FullPackage from '@/components/lesson-package/Full-Package';
-import HourlyPackage from '@/components/lesson-package/Hourly-Package';
 import TopBar from '@/components/Top-Bar';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import FullPackage from '../(package)/full/full-package';
+import HourlyPackage from '../(package)/hourly/hourly-package';
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');
@@ -37,7 +37,7 @@ const Package = () => {
         screenOptions={{
           tabBarStyle: styles.tabBar,
           tabBarItemStyle: styles.tab,
-          tabBarPressColor: 'transparent', // Removes ripple effect on press
+          tabBarPressColor: 'transparent',
           tabBarIndicatorStyle: {
             backgroundColor: 'transparent',
           },
@@ -47,12 +47,12 @@ const Package = () => {
         }}
       >
         <Tab.Screen
-          name="HourlyPackage"
+          name="hourlyPackage"
           component={HourlyPackage}
           options={{ title: 'Hourly Package' }}
         />
         <Tab.Screen
-          name="FullPackage"
+          name="fullPackage"
           component={FullPackage}
           options={{ title: 'Full Package' }}
         />
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginVertical: 10,
+    backgroundColor: '#F5F2EA',
   },
   tabBar: {
     elevation: 0,

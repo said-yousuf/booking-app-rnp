@@ -61,7 +61,17 @@ const Index = () => {
       {/* Booking Cards */}
       <FlatList
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
-        renderItem={() => <BookingCard />}
+        renderItem={() => (
+          <BookingCard
+            sessionStatus="completed"
+            studentName="Ahmad Sohail"
+            studentRole="Student"
+            sessionDate="Mar 10, 2025"
+            sessionTitle="G2 test with parallel testing"
+            location="Canada"
+            onPress={() => console.log('Navigating to details')}
+          />
+        )}
         keyExtractor={(item) => item.toString()}
         numColumns={1}
         showsVerticalScrollIndicator={false}

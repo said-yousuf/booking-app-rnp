@@ -3,27 +3,57 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Badge from './Badge';
 
-export const BookingCard = () => {
+interface PackageCardProps {
+  title?: string;
+  price?: string;
+  description?: string;
+  schedule?: string;
+  location?: string;
+  packageType?: string;
+  onEdit?: () => void;
+  onSecondAction?: () => void;
+  secondActionLabel?: string;
+}
+
+interface BookingCardProps {
+  sessionStatus: 'completed' | 'pending' | 'cancelled' | string;
+  studentName: string;
+  studentRole: string;
+  sessionDate: string;
+  sessionTitle: string;
+  location: string;
+  onPress?: () => void;
+}
+
+export const BookingCard: React.FC<BookingCardProps> = ({
+  sessionStatus = 'pending',
+  studentName = 'Unknown Student',
+  studentRole = 'Role Not Provided',
+  sessionDate = 'Date Unavailable',
+  sessionTitle = 'No Title Available',
+  location = 'Location Not Set',
+  onPress = () => console.log('Booking card pressed'),
+}) => {
   return (
     <View style={styles.bookingCardContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.sessionHeaderContainer}>
           <Text style={styles.sessionText}>Session Details</Text>
-          <Badge status="completed" />
+          <Badge status={sessionStatus} />
         </View>
 
         <View style={styles.detailContainer}>
           <Image source={icons.personIcon} style={styles.icon} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Ahmad Sohail</Text>
-            <Text style={styles.subtitle}>Student</Text>
+            <Text style={styles.title}>{studentName}</Text>
+            <Text style={styles.subtitle}>{studentRole}</Text>
           </View>
         </View>
 
         <View style={styles.detailContainer}>
           <Image source={icons.steerIcon} style={styles.icon} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Mar, 10, 2025</Text>
+            <Text style={styles.title}>{sessionDate}</Text>
             <Text style={styles.subtitle}>Session Date</Text>
           </View>
         </View>
@@ -31,7 +61,7 @@ export const BookingCard = () => {
         <View style={styles.detailContainer}>
           <Image source={icons.searchIcon} style={styles.icon} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>G2 test with parallel testing</Text>
+            <Text style={styles.title}>{sessionTitle}</Text>
             <Text style={styles.subtitle}>Session Title</Text>
           </View>
         </View>
@@ -39,11 +69,60 @@ export const BookingCard = () => {
         <View style={styles.detailContainer}>
           <Image source={icons.locationIcon} style={styles.icon} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Canada</Text>
+            <Text style={styles.title}>{location}</Text>
             <Text style={styles.subtitle}>Location</Text>
           </View>
         </View>
       </TouchableOpacity>
+    </View>
+  );
+};
+
+export const PackageCard: React.FC<PackageCardProps> = ({
+  title = 'Road Test',
+  price = '$60/Hr',
+  description = 'Traffic rules and regulations, Hazard Awareness, and Basics of vehicle...',
+  schedule = 'Dec 4, 2024 6:00 PM to 9:00 PM',
+  location = 'Main Street 238, Selkirk, Manitoba, R1A 1S2, Canada',
+  packageType = 'Road Test',
+  onEdit,
+  onSecondAction,
+  secondActionLabel = 'Schedules',
+}) => {
+  return (
+    <View style={styles.hourlyPackageContainer}>
+      <View style={styles.hourlyPackageHeader}>
+        <Text style={styles.hourlyPackageTitle}>{title}</Text>
+        <Text style={styles.hourlyPackagePrice}>{price}</Text>
+      </View>
+      <Text style={styles.hourlyPackageDescription}>{description}</Text>
+      <View style={styles.hourlyPackageDetail}>
+        <Image source={icons.scheduleIcon} style={styles.hourlyPackageIcon} />
+        <Text style={styles.hourlyPackageDetailDescription}>{schedule}</Text>
+      </View>
+      <View style={styles.hourlyPackageDetail}>
+        <Image source={icons.locationIcon} style={styles.hourlyPackageIcon} />
+        <Text style={styles.hourlyPackageDetailDescription}>{location}</Text>
+      </View>
+      <View style={styles.hourlyPackageDetail}>
+        <Image source={icons.steerIcon} style={styles.hourlyPackageIcon} />
+        <Text style={styles.hourlyPackageDetailDescription}>{packageType}</Text>
+      </View>
+
+      <View style={styles.hourlyPackageButtonContainer}>
+        <TouchableOpacity style={styles.hourlyPackageButton} onPress={onEdit}>
+          <Text style={styles.hourlyPackageButtonText}>Edit</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.hourlyPackageButton}
+          onPress={onSecondAction}
+        >
+          <Text style={styles.hourlyPackageButtonText}>
+            {secondActionLabel}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -91,5 +170,72 @@ const styles = StyleSheet.create({
     borderColor: '#EFEFEF',
     backgroundColor: 'white',
     borderRadius: 12,
+  },
+
+  //Package Card
+
+  hourlyPackageContainer: {
+    height: 332,
+    width: 362,
+    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    justifyContent: 'center',
+  },
+  hourlyPackageHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  hourlyPackageTitle: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: '#080705',
+  },
+  hourlyPackagePrice: {
+    borderColor: '#E8E6E1',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 8,
+    fontSize: 12,
+    fontWeight: 700,
+  },
+  hourlyPackageDescription: {
+    fontSize: 14,
+    fontWeight: 400,
+    color: '#504A40',
+  },
+  hourlyPackageDetail: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  hourlyPackageDetailDescription: {
+    color: '#504A40',
+    fontWeight: 500,
+    fontSize: 14,
+  },
+  hourlyPackageIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
+  hourlyPackageButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 20,
+  },
+  hourlyPackageButton: {
+    backgroundColor: '#fafafa',
+    borderColor: '#DEE2E5',
+    borderRadius: 8,
+    borderWidth: 1,
+    width: 151,
+    height: 37,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  hourlyPackageButtonText: {
+    fontWeight: 400,
+    fontSize: 14,
   },
 });
