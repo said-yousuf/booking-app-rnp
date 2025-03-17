@@ -1,8 +1,8 @@
+import { onboardingData } from '@/constants/data';
 import icons from '@/constants/icons';
-import images from '@/constants/images';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
-import { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -11,16 +11,28 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Carousel from 'react-native-reanimated-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function App() {
+interface OnboardingItem {
+  id: string;
+  image: any;
+  title: string;
+  description: string;
+}
+
+type CarouselRef = React.RefObject<any>;
+
+function App() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef(null) as CarouselRef;
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const { height } = Dimensions.get('window');
-  const snapPoints = useMemo(() => [height * 0.55], [height]);
+  const { height, width } = Dimensions.get('window');
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
+
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
@@ -29,23 +41,67 @@ export default function App() {
     bottomSheetModalRef.current?.close();
   }, []);
 
+  const renderItem = useCallback(({ item }: { item: OnboardingItem }) => {
+    return (
+      <View style={styles.onboardingSlide}>
+        <Image
+          source={item.image}
+          style={styles.onboardingImage}
+          resizeMode="contain"
+        />
+        <Text style={styles.onboardingHeading}>{item.title}</Text>
+        <Text style={styles.onboardingText}>{item.description}</Text>
+      </View>
+    );
+  }, []);
+
+  const goToNextSlide = useCallback(() => {
+    if (currentIndex < onboardingData.length - 1 && carouselRef.current) {
+      carouselRef.current.scrollTo({ index: currentIndex + 1, animated: true });
+    } else {
+      handlePresentModalPress();
+    }
+  }, [currentIndex, handlePresentModalPress]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Image source={icons.logo} style={styles.logo} />
-      <Image source={images.onboarding1} style={styles.onboardingImage} />
-      <Text style={styles.onboardingHeading}>
-        Meet your local driving instructor
-      </Text>
-      <Text style={styles.onboardingText}>
-        Connect with certified instructors, schedule lessons, and improve your
-        driving ease
-      </Text>
-      <TouchableOpacity
-        style={styles.onboardingButton}
-        onPress={handlePresentModalPress}
-      >
-        <Text style={styles.onboardingButtonText}>Get Started</Text>
+
+      <View style={styles.carouselContainer}>
+        <Carousel
+          ref={carouselRef}
+          width={width - 50}
+          height={450}
+          data={onboardingData}
+          renderItem={renderItem}
+          onSnapToItem={(index) => setCurrentIndex(index)}
+          loop={false}
+        />
+      </View>
+
+      {/* Pagination Indicators */}
+      <View style={styles.paginationContainer}>
+        {onboardingData.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.paginationDot,
+              {
+                backgroundColor: index === currentIndex ? '#2130E7' : '#D4D0C6',
+              },
+            ]}
+          />
+        ))}
+      </View>
+
+      <TouchableOpacity style={styles.onboardingButton} onPress={goToNextSlide}>
+        <Text style={styles.onboardingButtonText}>
+          {currentIndex === onboardingData.length - 1
+            ? 'Get Started'
+            : 'Continue'}
+        </Text>
       </TouchableOpacity>
+
       <BottomSheetModal
         ref={bottomSheetModalRef}
         onChange={handleSheetChanges}
@@ -119,39 +175,58 @@ const styles = StyleSheet.create({
     width: 143,
     height: 39,
     padding: 20,
-    marginVertical: 40,
+    marginVertical: 30,
+  },
+  carouselContainer: {
+    height: 450,
+    width: '100%',
+    marginTop: 50,
+  },
+  onboardingSlide: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   onboardingImage: {
-    width: 173,
-    height: 169,
-    marginVertical: 50,
+    width: 200,
+    height: 200,
+    marginTop: 20,
+    marginBottom: 30,
   },
   onboardingHeading: {
     fontSize: 32,
     lineHeight: 40,
     textAlign: 'center',
     fontWeight: '500',
-    marginTop: 20,
-    paddingHorizontal: 20,
+    marginBottom: 16,
+    paddingHorizontal: 10,
   },
   onboardingText: {
     fontSize: 16,
     fontWeight: '400',
     lineHeight: 26,
-    marginTop: 20,
-    paddingHorizontal: 5,
-    textAlign: 'center',
+    color: '#737377',
+    paddingHorizontal: 10,
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 50,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 6,
   },
   onboardingButton: {
     position: 'absolute',
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
     bottom: 40,
     backgroundColor: '#2130E7',
     height: 49,
     width: 304,
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
   },
   onboardingButtonText: {
@@ -212,7 +287,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-
   googleIcon: {
     width: 24,
     height: 24,
@@ -246,3 +320,5 @@ const styles = StyleSheet.create({
     color: '#2130E7',
   },
 });
+
+export default App;

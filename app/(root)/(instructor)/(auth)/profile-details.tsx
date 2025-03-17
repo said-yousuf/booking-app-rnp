@@ -19,10 +19,7 @@ interface ProfileDetailsFormData {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: {
-    countryCode: string;
-    number: string;
-  };
+  phoneNumber: string; // now a single string containing both country code and number
   password: string;
 }
 
@@ -36,7 +33,7 @@ const ProfileDetails = () => {
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber: { countryCode: '', number: '' },
+      phoneNumber: '', // stored as a single string
       password: '',
     },
   });
@@ -45,6 +42,7 @@ const ProfileDetails = () => {
     console.log('FormData: ', data);
     router.navigate('/(root)/(instructor)/(auth)/location-details');
   };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -52,9 +50,7 @@ const ProfileDetails = () => {
           {/* Header */}
           <View style={styles.header}>
             <BackButton />
-
             <Text>1/5</Text>
-
             <Image source={icons.status} style={styles.iconStatus} />
           </View>
 
@@ -144,22 +140,27 @@ const ProfileDetails = () => {
               control={control}
               rules={{
                 validate: (value) =>
-                  value.countryCode && value.number
+                  value && value.includes('-')
                     ? true
                     : 'Phone number is required.',
               }}
-              render={({ field: { onChange, value } }) => (
-                <PhoneNumberInput
-                  countryCode={value.countryCode}
-                  phoneNumber={value.number}
-                  onChangeCountryCode={(code) =>
-                    onChange({ ...value, countryCode: code })
-                  }
-                  onChangePhoneNumber={(num) =>
-                    onChange({ ...value, number: num })
-                  }
-                />
-              )}
+              render={({ field: { onChange, value } }) => {
+                const [currentCountryCode, currentNumber] = value
+                  ? value.split('-')
+                  : ['', ''];
+                return (
+                  <PhoneNumberInput
+                    countryCode={currentCountryCode}
+                    phoneNumber={currentNumber}
+                    onChangeCountryCode={(code) =>
+                      onChange(`${code}-${currentNumber}`)
+                    }
+                    onChangePhoneNumber={(num) =>
+                      onChange(`${currentCountryCode}-${num}`)
+                    }
+                  />
+                );
+              }}
             />
             {errors.phoneNumber && (
               <Text style={{ color: 'red' }}>
@@ -286,4 +287,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
+
 export default ProfileDetails;

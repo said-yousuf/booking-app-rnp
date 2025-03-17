@@ -1,6 +1,7 @@
 import BackButton from '@/components/Back-Button';
 import CountryPickerComponent from '@/components/Country-Picker';
 import DetailSection from '@/components/Detail-Section';
+import LocationInput from '@/components/Location-Input';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';
@@ -20,9 +21,10 @@ interface ProfileDetailsFormData {
   city: string;
   street: string;
   postalCode: string;
+  location: string;
 }
 
-const SignUp = () => {
+const LocationDetails = () => {
   const {
     control,
     formState: { errors },
@@ -74,7 +76,7 @@ const SignUp = () => {
             <Controller
               name="city"
               control={control}
-              rules={{ required: 'City is required' }}
+              rules={{ required: 'City is required.' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   placeholder="Enter your City"
@@ -114,7 +116,7 @@ const SignUp = () => {
 
           {/* Postal Code Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Postal</Text>
+            <Text style={styles.label}>Postal Code</Text>
             <Controller
               name="postalCode"
               control={control}
@@ -131,6 +133,22 @@ const SignUp = () => {
             />
             {errors.postalCode && (
               <Text style={{ color: 'red' }}>{errors.postalCode.message}</Text>
+            )}
+          </View>
+
+          {/* Location Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Location</Text>
+            <Controller
+              name="location"
+              control={control}
+              rules={{ required: 'Location is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <LocationInput value={value} onChange={onChange} />
+              )}
+            />
+            {errors.location && (
+              <Text style={{ color: 'red' }}>{errors.location.message}</Text>
             )}
           </View>
         </View>
@@ -207,4 +225,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default LocationDetails;

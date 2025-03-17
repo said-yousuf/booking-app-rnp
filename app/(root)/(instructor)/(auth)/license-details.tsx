@@ -1,9 +1,10 @@
 import BackButton from '@/components/Back-Button';
-import { CalendarInput } from '@/components/Date-Picker';
 import DetailSection from '@/components/Detail-Section';
+import ImagePickerComponent, { FileItem } from '@/components/Image-Picker';
 import icons from '@/constants/icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Image,
@@ -19,7 +20,7 @@ interface LicenseDetailsFormData {
   licenseNumber: string;
   issueDate: Date;
   expireDate: Date;
-  photo: string | null;
+  photo: FileItem[];
 }
 
 const LicenseDetails = () => {
@@ -28,6 +29,11 @@ const LicenseDetails = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<LicenseDetailsFormData>();
+
+  const [openIssueDate, setOpenIssueDate] = useState(false);
+  const [openExpireDate, setOpenExpireDate] = useState(false);
+  const [showIssueDatePicker, setShowIssueDatePicker] = useState(false);
+  const [showExpireDatePicker, setShowExpireDatePicker] = useState(false);
 
   const onSubmit = (data: LicenseDetailsFormData) => {
     console.log('FormData: ', data);
@@ -78,49 +84,107 @@ const LicenseDetails = () => {
           {/* Issue Date Input */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Issue Date</Text>
-            <Controller
-              name="issueDate"
-              control={control}
-              rules={{ required: 'Issue date is required.' }}
-              render={({ field: { onChange, value } }) => (
-                <CalendarInput value={value} onChange={onChange} />
+            <TouchableOpacity
+              style={[styles.input, { justifyContent: 'center', height: 44 }]}
+              onPress={() => setOpenIssueDate(true)}
+            >
+              <Controller
+                name="issueDate"
+                control={control}
+                rules={{ required: 'Issue date is required.' }}
+                render={({ field: { onChange, value } }) => (
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => setShowIssueDatePicker(true)}
+                    >
+                      <Text>
+                        {value ? value.toDateString() : 'Select Date'}
+                      </Text>
+                    </TouchableOpacity>
+                    {showIssueDatePicker && (
+                      <DateTimePicker
+                        value={value || new Date()}
+                        mode="date"
+                        display="default"
+                        onChange={(event, selectedDate) => {
+                          setShowIssueDatePicker(false);
+                          if (selectedDate) {
+                            onChange(selectedDate);
+                          }
+                        }}
+                      />
+                    )}
+                  </View>
+                )}
+              />
+              {errors.issueDate && (
+                <Text style={{ color: 'red' }}>{errors.issueDate.message}</Text>
               )}
-            />
-            {errors.issueDate && (
-              <Text style={{ color: 'red' }}>{errors.issueDate.message}</Text>
-            )}
+            </TouchableOpacity>
           </View>
 
           {/* Expire Date Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Expire Date</Text>
-            <Controller
-              name="expireDate"
-              control={control}
-              rules={{ required: 'Expire date is required.' }}
-              render={({ field: { onChange, value } }) => (
-                <CalendarInput value={value} onChange={onChange} />
+            <Text style={styles.label}>Issue Date</Text>
+            <TouchableOpacity
+              style={[styles.input, { justifyContent: 'center', height: 44 }]}
+              onPress={() => setOpenExpireDate(true)}
+            >
+              <Controller
+                name="expireDate"
+                control={control}
+                rules={{ required: 'Expire date is required.' }}
+                render={({ field: { onChange, value } }) => (
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => setShowExpireDatePicker(true)}
+                    >
+                      <Text>
+                        {value ? value.toDateString() : 'Select Date'}
+                      </Text>
+                    </TouchableOpacity>
+                    {showExpireDatePicker && (
+                      <DateTimePicker
+                        value={value || new Date()}
+                        mode="date"
+                        display="default"
+                        onChange={(event, selectedDate) => {
+                          setShowExpireDatePicker(false);
+                          if (selectedDate) {
+                            onChange(selectedDate);
+                          }
+                        }}
+                      />
+                    )}
+                  </View>
+                )}
+              />
+              {errors.expireDate && (
+                <Text style={{ color: 'red' }}>
+                  {errors.expireDate.message}
+                </Text>
               )}
-            />
-            {errors.expireDate && (
-              <Text style={{ color: 'red' }}>{errors.expireDate.message}</Text>
-            )}
+            </TouchableOpacity>
           </View>
 
-          {/* <View style={styles.inputContainer}>
+          <View style={styles.inputContainer}>
             <Text style={styles.label}>License Photo</Text>
             <Controller
               name="photo"
               control={control}
               rules={{ required: 'License photo is required.' }}
               render={({ field: { onChange, value } }) => (
-                <ImagePickerComponent value={value} onChange={onChange} />
+                <ImagePickerComponent
+                  value={value || []}
+                  onChange={onChange}
+                  fileType="document"
+                />
               )}
             />
             {errors.photo && (
               <Text style={{ color: 'red' }}>{errors.photo.message}</Text>
             )}
-          </View> */}
+          </View>
         </View>
       </ScrollView>
       <View style={styles.buttonWrapper}>

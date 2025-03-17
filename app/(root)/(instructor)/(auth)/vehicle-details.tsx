@@ -1,5 +1,6 @@
 import BackButton from '@/components/Back-Button';
 import DetailSection from '@/components/Detail-Section';
+import ImagePickerComponent, { FileItem } from '@/components/Image-Picker';
 import icons from '@/constants/icons';
 import { router } from 'expo-router';
 import React from 'react';
@@ -18,6 +19,7 @@ interface VehicleDetailsFormData {
   model: string;
   plateNumber: string;
   insuranceNumber: string;
+  carPhoto: FileItem[];
 }
 
 const VehicleDetails = () => {
@@ -113,6 +115,25 @@ const VehicleDetails = () => {
               <Text style={{ color: 'red' }}>
                 {errors.insuranceNumber.message}
               </Text>
+            )}
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Vehicle Photo</Text>
+            <Controller
+              name="carPhoto"
+              control={control}
+              rules={{ required: 'Vehicle photo is required.' }}
+              render={({ field: { onChange, value } }) => (
+                <ImagePickerComponent
+                  value={value || []}
+                  onChange={onChange}
+                  fileType="image"
+                />
+              )}
+            />
+            {errors.carPhoto && (
+              <Text style={{ color: 'red' }}>{errors.carPhoto.message}</Text>
             )}
           </View>
         </View>
