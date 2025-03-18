@@ -41,10 +41,26 @@ export const onboardingData: OnboardingItem[] = [
 
 export const settingData = [
   { itemName: 'Language', itemIcon: icons.world },
-  { itemName: 'Payment Methods', itemIcon: icons.walet },
-  { itemName: 'Transaction', itemIcon: icons.coin },
-  { itemName: 'Security Settings', itemIcon: icons.lock },
-  { itemName: 'Vehicle Settings', itemIcon: icons.vehicle2 },
+  {
+    itemName: 'Payment Methods',
+    itemIcon: icons.walet,
+    redirectPath: '/payment',
+  },
+  {
+    itemName: 'Transaction',
+    itemIcon: icons.coin,
+    redirectPath: '/transaction',
+  },
+  {
+    itemName: 'Security Settings',
+    itemIcon: icons.lock,
+    redirectPath: '/security',
+  },
+  {
+    itemName: 'Vehicle Settings',
+    itemIcon: icons.vehicle2,
+    redirectPath: '/vehicle',
+  },
   { itemName: 'license Settings', itemIcon: icons.contact },
   { itemName: 'Notifications', itemIcon: icons.bell2 },
 ];

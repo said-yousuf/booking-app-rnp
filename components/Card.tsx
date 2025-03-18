@@ -127,6 +127,32 @@ export const PackageCard: React.FC<PackageCardProps> = ({
   );
 };
 
+export const VehicleInfoCard = () => {
+  return (
+    <View style={styles.vehicleInfoContainer}>
+      <View style={styles.vehicleInfoHeader}>
+        <Text style={styles.vehicleInfoHeaderText}>Vehicle Information</Text>
+        <Badge status="Approved" />
+      </View>
+
+      <View style={styles.vehicleInfoData}>
+        <Image source={icons.settingIcon} style={styles.vehicleInfoDataIcon} />
+        <Text style={styles.vehicleInfoDataText}>Toyota Corolla</Text>
+      </View>
+
+      <View style={styles.vehicleInfoData}>
+        <Image source={icons.locationIcon} style={styles.vehicleInfoDataIcon} />
+        <Text style={styles.vehicleInfoDataText}>1243124314</Text>
+      </View>
+
+      <View style={styles.vehicleInfoData}>
+        <Image source={icons.steerIcon} style={styles.vehicleInfoDataIcon} />
+        <Text style={styles.vehicleInfoDataText}>ABC231</Text>
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   sessionHeaderContainer: {
     flexDirection: 'row',
@@ -237,5 +263,38 @@ const styles = StyleSheet.create({
   hourlyPackageButtonText: {
     fontWeight: 400,
     fontSize: 14,
+  },
+
+  //Vehicle Card
+  vehicleInfoHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  vehicleInfoContainer: {
+    width: 362,
+    height: 206,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 20,
+  },
+  vehicleInfoData: {
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  vehicleInfoDataIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  vehicleInfoDataText: {
+    fontWeight: '500',
+    fontSize: 14,
+    color: '#504A40',
+  },
+  vehicleInfoHeaderText: {
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#080705',
   },
 });

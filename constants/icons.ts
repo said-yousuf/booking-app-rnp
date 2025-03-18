@@ -17,6 +17,7 @@ import contact from '@/assets/icons/contact.png';
 import go from '@/assets/icons/go.png';
 import google from '@/assets/icons/google.png';
 import homeIcon from '@/assets/icons/home.png';
+import info from '@/assets/icons/info.png';
 import license from '@/assets/icons/license.png';
 import location from '@/assets/icons/location.png';
 import locationIcon from '@/assets/icons/location_2.png';
@@ -84,4 +85,5 @@ export default {
   go,
   bell2,
   profile,
+  info,
 };

@@ -12,28 +12,27 @@ const Badge = ({ status }: { status: string }) => {
 
 const styles = StyleSheet.create({
   sessionBadgeContainer: {
-    width: 100,
-    height: 25,
+    width: 82,
+    height: 20,
     borderRadius: 20,
-    backgroundColor: '#8CDCCC',
+    backgroundColor: '#F1FCED ',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
+    borderWidth: 1.2,
+    flexDirection: 'row',
+    borderColor: '#C4EDB8',
   },
   sessionBadgeColor: {
-    width: 12,
-    height: 12,
+    width: 9,
+    height: 9,
     borderRadius: '100%',
     backgroundColor: 'green',
-    position: 'absolute',
-    zIndex: 50,
-    top: 6,
-    left: 6,
   },
   sessionBadgeText: {
     fontWeight: '400',
     fontSize: 12,
-    marginLeft: 10,
+    color: '#27241D',
+    marginLeft: 2,
   },
 });
 

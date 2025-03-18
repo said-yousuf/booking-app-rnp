@@ -1,5 +1,6 @@
 import { settingData } from '@/constants/data';
 import icons from '@/constants/icons';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
   Image,
@@ -28,34 +29,39 @@ const Setting = () => {
         <Image source={icons.go} style={styles.redirectIcon} />
       </TouchableOpacity>
 
-      <View>
-        {settingData.map((item, index) => {
-          return item.itemName === 'Notifications' ? (
+      {settingData.map((item, index) => {
+        return item.itemName === 'Notifications' ? (
+          <View style={styles.settingContainer}>
+            <View style={styles.settingItemContainer}>
+              <Image source={item.itemIcon} style={styles.settingIcon} />
+              <Text style={styles.settingText}>{item.itemName}</Text>
+            </View>
+            <Switch
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </View>
+        ) : (
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              if (item.redirectPath) {
+                router.navigate(item.redirectPath as any);
+              }
+            }}
+          >
             <View style={styles.settingContainer}>
               <View style={styles.settingItemContainer}>
                 <Image source={item.itemIcon} style={styles.settingIcon} />
-                <Text style={styles.settingText}>{item.itemName}</Text>
+                <Text style={styles.settingText}>{item.itemName} </Text>
               </View>
-              <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              />
+              <Image source={icons.go} style={styles.redirectIcon} />
             </View>
-          ) : (
-            <TouchableOpacity key={index}>
-              <View style={styles.settingContainer}>
-                <View style={styles.settingItemContainer}>
-                  <Image source={item.itemIcon} style={styles.settingIcon} />
-                  <Text style={styles.settingText}>{item.itemName} </Text>
-                </View>
-                <Image source={icons.go} style={styles.redirectIcon} />
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+          </TouchableOpacity>
+        );
+      })}
     </ScrollView>
   );
 };
