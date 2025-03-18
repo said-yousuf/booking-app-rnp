@@ -1,6 +1,14 @@
 import icons from '@/constants/icons';
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { router } from 'expo-router';
+import React, { useState } from 'react';
+import {
+  Image,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Badge from './Badge';
 
 interface PackageCardProps {
@@ -153,6 +161,36 @@ export const VehicleInfoCard = () => {
   );
 };
 
+export const SecuritySettingCard = () => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  return (
+    <View style={styles.securitySettingContainer}>
+      <TouchableOpacity
+        style={styles.securitySettingHeader}
+        onPress={() => router.navigate('/change-password')}
+      >
+        <Image source={icons.lock2} style={styles.securitySettingHeaderIcon} />
+        <Text style={styles.securitySettingHeaderText}>Change Password</Text>
+      </TouchableOpacity>
+      <View style={styles.securitySettingMain}>
+        <View style={styles.securitySettingMainContent}>
+          <Image source={icons.lock2} style={styles.securitySettingIcon} />
+          <Text style={styles.securitySettingMainText}>
+            Two-Factor Authentication
+          </Text>
+        </View>
+        <Switch
+          trackColor={{ false: '#767577', true: '#81b0ff' }}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   sessionHeaderContainer: {
     flexDirection: 'row',
@@ -296,5 +334,57 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
     color: '#080705',
+  },
+
+  //Security Setting Card
+  securitySettingContainer: {},
+  securitySettingHeader: {
+    flexDirection: 'row',
+    width: 362,
+    height: 56,
+    backgroundColor: '#fff',
+    borderColor: '#D3CEC4',
+    borderTopRightRadius: 14,
+    borderTopLeftRadius: 14,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
+  securitySettingIcon: {
+    width: 24,
+    height: 24,
+    marginHorizontal: 10,
+  },
+  securitySettingHeaderIcon: {
+    width: 24,
+    height: 24,
+    marginHorizontal: 10,
+    color: '#504A40',
+  },
+  securitySettingHeaderText: {
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#504A40',
+  },
+  securitySettingMain: {
+    flexDirection: 'row',
+    width: 362,
+    height: 56,
+    backgroundColor: '#fff',
+    borderColor: '#D3CEC4',
+    borderBottomRightRadius: 14,
+    borderBottomLeftRadius: 14,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    justifyContent: 'space-between',
+  },
+  securitySettingMainText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#080705',
+  },
+  securitySettingMainContent: {
+    flexDirection: 'row',
   },
 });
