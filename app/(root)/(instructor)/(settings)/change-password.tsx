@@ -32,7 +32,7 @@ const ChangePassword = () => {
     router.navigate('/setting');
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#F5F2EA' }}>
       <ScrollView>
         <View style={styles.container}>
           <SettingsTopBar
@@ -160,8 +160,6 @@ const ChangePassword = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#F5F2EA',
     padding: 20,
   },
   content: {

@@ -207,7 +207,10 @@ export const PaymentSettingCard = () => {
         <Badge status="Approved" />
       </View>
 
-      <TouchableOpacity style={styles.paymentSettingAddContainer}>
+      <TouchableOpacity
+        style={styles.paymentSettingAddContainer}
+        onPress={() => router.navigate('/new-payment')}
+      >
         <Image source={icons.add} style={styles.paymentSettingAddIcon} />
         <Text style={styles.paymentSettingAddText}>New Payment Method</Text>
       </TouchableOpacity>
