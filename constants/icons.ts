@@ -14,8 +14,10 @@ import {
 } from '@/assets/icons/close.png';
 import coin from '@/assets/icons/coin.png';
 import contact from '@/assets/icons/contact.png';
+import eye from '@/assets/icons/eye.png';
 import go from '@/assets/icons/go.png';
 import google from '@/assets/icons/google.png';
+import hideEye from '@/assets/icons/hide.png';
 import homeIcon from '@/assets/icons/home.png';
 import info from '@/assets/icons/info.png';
 import license from '@/assets/icons/license.png';
@@ -86,4 +88,6 @@ export default {
   bell2,
   profile,
   info,
+  eye,
+  hideEye,
 };

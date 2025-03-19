@@ -31,7 +31,7 @@ const Setting = () => {
 
       {settingData.map((item, index) => {
         return item.itemName === 'Notifications' ? (
-          <View style={styles.settingContainer}>
+          <View style={styles.settingContainer} key={index}>
             <View style={styles.settingItemContainer}>
               <Image source={item.itemIcon} style={styles.settingIcon} />
               <Text style={styles.settingText}>{item.itemName}</Text>

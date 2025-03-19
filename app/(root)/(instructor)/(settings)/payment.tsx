@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const payment = () => {
+const Payment = () => {
   return (
     <View>
-      <Text>payment</Text>
+      <Text>Payment</Text>
     </View>
   );
 };
 
-export default payment;
+export default Payment;
