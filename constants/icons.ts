@@ -20,6 +20,7 @@ import go from '@/assets/icons/go.png';
 import google from '@/assets/icons/google.png';
 import hideEye from '@/assets/icons/hide.png';
 import homeIcon from '@/assets/icons/home.png';
+import home2 from '@/assets/icons/home2.png';
 import info from '@/assets/icons/info.png';
 import license from '@/assets/icons/license.png';
 import location from '@/assets/icons/location.png';
@@ -39,6 +40,7 @@ import profile from '@/assets/icons/profile.png';
 import requestIcon from '@/assets/icons/request.png';
 import scheduleIcon from '@/assets/icons/schedule.png';
 import searchIcon from '@/assets/icons/search.png';
+import search from '@/assets/icons/search2.png';
 import settingIcon from '@/assets/icons/setting.png';
 import status from '@/assets/icons/status.png';
 import steerIcon from '@/assets/icons/steer.png';
@@ -96,4 +98,6 @@ export default {
   visaIcon,
   paymentCardIcon,
   add,
+  search,
+  home2,
 };

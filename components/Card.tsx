@@ -218,6 +218,28 @@ export const PaymentSettingCard = () => {
   );
 };
 
+export const TransactionCard = () => {
+  return (
+    <TouchableOpacity onPress={() => router.navigate('/transaction-detail')}>
+      <View style={styles.transactionCardContainer}>
+        <View style={styles.transactionCardLeftContainer}>
+          <Image source={icons.home2} style={styles.transactionCardIcon} />
+          <View style={styles.transactionCardTextContainer}>
+            <Text style={styles.transactionCardTitle}>
+              Cash Paid to Mohammad Arif
+            </Text>
+            <Text style={styles.transactionCardSubtitle}>
+              18:32, 20/02/2022
+            </Text>
+          </View>
+        </View>
+
+        <Text style={styles.transactionCardPrice}>+78.99$</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
   sessionHeaderContainer: {
     flexDirection: 'row',
@@ -469,6 +491,43 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   paymentSettingLeftSide: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  //Transaction Card
+  transactionCardContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 14,
+    width: 358,
+    height: 68,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+    marginTop: 10,
+  },
+  transactionCardIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 10,
+  },
+  transactionCardTextContainer: {},
+  transactionCardTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  transactionCardSubtitle: {
+    color: '#73716E',
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  transactionCardPrice: {
+    color: '#73716E',
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  transactionCardLeftContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
