@@ -1,3 +1,4 @@
+import add from '@/assets/icons/add.png';
 import apple from '@/assets/icons/apple.png';
 import avatar from '@/assets/icons/avatar.png';
 import avatar2 from '@/assets/icons/avatar2.png';
@@ -31,6 +32,7 @@ import mail from '@/assets/icons/mail.png';
 import messageIcon from '@/assets/icons/message.png';
 import openGallary from '@/assets/icons/open-gallary.png';
 import packageIcon from '@/assets/icons/package.png';
+import paymentCardIcon from '@/assets/icons/payment-card.png';
 import personIcon from '@/assets/icons/person.png';
 import plusIcon from '@/assets/icons/plus.png';
 import profile from '@/assets/icons/profile.png';
@@ -42,6 +44,7 @@ import status from '@/assets/icons/status.png';
 import steerIcon from '@/assets/icons/steer.png';
 import vehicle from '@/assets/icons/vehicle.png';
 import vehicle2 from '@/assets/icons/vehicle2.png';
+import visaIcon from '@/assets/icons/visa.png';
 import walet from '@/assets/icons/walet.png';
 import world from '@/assets/icons/world.png';
 
@@ -90,4 +93,7 @@ export default {
   info,
   eye,
   hideEye,
+  visaIcon,
+  paymentCardIcon,
+  add,
 };

@@ -165,7 +165,7 @@ export const SecuritySettingCard = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (
-    <View style={styles.securitySettingContainer}>
+    <View>
       <TouchableOpacity
         style={styles.securitySettingHeader}
         onPress={() => router.navigate('/change-password')}
@@ -187,6 +187,30 @@ export const SecuritySettingCard = () => {
           value={isEnabled}
         />
       </View>
+    </View>
+  );
+};
+
+export const PaymentSettingCard = () => {
+  return (
+    <View style={styles.paymentSettingContainer}>
+      <View style={styles.paymentSettingHeaderContainer}>
+        <View style={styles.paymentSettingLeftSide}>
+          <Image source={icons.visaIcon} style={styles.visaIcon} />
+          <View>
+            <Text style={styles.paymentSettingTitle}>Yennefer Clasky</Text>
+            <Text style={styles.paymentSettingSubtitle}>
+              0112345678-October 15, 2025
+            </Text>
+          </View>
+        </View>
+        <Badge status="Approved" />
+      </View>
+
+      <TouchableOpacity style={styles.paymentSettingAddContainer}>
+        <Image source={icons.add} style={styles.paymentSettingAddIcon} />
+        <Text style={styles.paymentSettingAddText}>New Payment Method</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -337,7 +361,6 @@ const styles = StyleSheet.create({
   },
 
   //Security Setting Card
-  securitySettingContainer: {},
   securitySettingHeader: {
     flexDirection: 'row',
     width: 362,
@@ -386,5 +409,64 @@ const styles = StyleSheet.create({
   },
   securitySettingMainContent: {
     flexDirection: 'row',
+  },
+
+  //Payment Card Setting
+  paymentSettingContainer: {},
+  paymentSettingHeaderContainer: {
+    flexDirection: 'row',
+    height: 64,
+    width: 362,
+    borderColor: '#D3CEC4',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  visaIcon: {
+    height: 30,
+    width: 40,
+    marginRight: 10,
+  },
+  paymentSettingTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#423D33',
+  },
+  paymentSettingSubtitle: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#625D52',
+  },
+  paymentSettingAddContainer: {
+    borderColor: '#D3CEC4',
+    backgroundColor: '#fff',
+    height: 50,
+    width: 362,
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  paymentSettingAddIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  paymentSettingAddText: {
+    color: '#27241D',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  paymentSettingLeftSide: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
