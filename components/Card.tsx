@@ -240,6 +240,76 @@ export const TransactionCard = () => {
   );
 };
 
+export const PaymentCardDetail = () => {
+  return (
+    <View style={styles.paymentDetailContainer}>
+      <View style={styles.paymentDetailRow}>
+        <Text style={styles.paymentDetailLabel}>Session Fee</Text>
+        <Text style={styles.paymentDetailValue}>$60/hr</Text>
+      </View>
+
+      <View style={styles.paymentDetailDivider} />
+
+      <View style={styles.paymentDetailRow}>
+        <Text style={styles.paymentDetailLabel}>Tax</Text>
+        <Text style={styles.paymentDetailValue}>+$3.99</Text>
+      </View>
+
+      <View style={styles.paymentDetailDivider} />
+
+      <View style={styles.paymentDetailRow}>
+        <Text style={styles.paymentDetailLabel}>Commission</Text>
+        <Text style={styles.paymentDetailValue}>+$3.99</Text>
+      </View>
+
+      <View style={styles.paymentDetailDivider} />
+
+      <View style={styles.paymentDetailRow}>
+        <Text style={styles.paymentDetailTotalLabel}>Total Amount</Text>
+        <Text style={styles.paymentDetailTotalValue}>$64</Text>
+      </View>
+    </View>
+  );
+};
+
+export const TransactionCardDetail = () => {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.transactionCardDetailTitle}>Road Essentials</Text>
+      <Text style={styles.transactionCardDetailSubtitle}>
+        Traffic rules and regulations, Hazard Awareness, and Basics of
+        vehicle...
+      </Text>
+
+      <View style={styles.infoContainer}>
+        <View style={styles.infoItem}>
+          <Image source={icons.clockIcon} style={{ height: 20, width: 20 }} />
+          <View style={styles.infoTextContainer}>
+            <Text style={styles.infoText}>3:00am - 4:00am</Text>
+            <Text style={styles.infoSubtext}>Session time</Text>
+          </View>
+        </View>
+
+        <View style={styles.infoItem}>
+          <Image source={icons.coin} style={{ height: 20, width: 20 }} />
+          <View style={styles.infoTextContainer}>
+            <Text style={styles.infoText}>$30/Hr</Text>
+            <Text style={styles.infoSubtext}>Session Fee</Text>
+          </View>
+        </View>
+
+        <View style={styles.infoItem}>
+          <Image source={icons.personIcon} style={{ height: 20, width: 20 }} />
+          <View style={styles.infoTextContainer}>
+            <Text style={styles.infoText}>Mohammad Rahmani</Text>
+            <Text style={styles.infoSubtext}>Student</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   sessionHeaderContainer: {
     flexDirection: 'row',
@@ -530,5 +600,94 @@ const styles = StyleSheet.create({
   transactionCardLeftContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+
+  //Transaction card details
+  card: {
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    padding: 16,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    width: 362,
+  },
+  transactionCardDetailTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 6,
+    color: '#000',
+  },
+  transactionCardDetailSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 16,
+    lineHeight: 20,
+  },
+  infoContainer: {
+    marginTop: 8,
+  },
+  infoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  infoTextContainer: {
+    marginLeft: 12,
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
+  },
+  infoSubtext: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 2,
+  },
+
+  //Payment detail card
+  paymentDetailContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    padding: 16,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    width: 362,
+  },
+  paymentDetailRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+  },
+  paymentDetailDivider: {
+    height: 1,
+    backgroundColor: '#f0f0f0',
+  },
+  paymentDetailLabel: {
+    fontSize: 16,
+    color: '#000',
+  },
+  paymentDetailValue: {
+    fontSize: 16,
+    color: '#000',
+    fontWeight: '500',
+  },
+  paymentDetailTotalLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  paymentDetailTotalValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
   },
 });
