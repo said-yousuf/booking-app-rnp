@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    margin: 20,
   },
   text: {
     fontWeight: '500',

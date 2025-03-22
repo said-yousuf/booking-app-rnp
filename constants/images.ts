@@ -1,3 +1,5 @@
+import noMessage from '@/assets/images/no-message.png';
+import NoRequest from '@/assets/images/no-request.png';
 import noSchedule from '@/assets/images/no-schedule.png';
 import onboarding1 from '@/assets/images/onboarding-1.png';
 import onboarding2 from '@/assets/images/onboarding-2.png';
@@ -12,4 +14,6 @@ export default {
   onboarding4,
   noSchedule,
   packageImage,
+  noMessage,
+  NoRequest,
 };

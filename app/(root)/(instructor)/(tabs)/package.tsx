@@ -66,7 +66,7 @@ export default Package;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 10,
+    margin: 20,
     backgroundColor: '#F5F2EA',
   },
   tabBar: {
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     alignItems: 'center',
     height: 43,
+    marginTop: 20,
   },
   tab: {
     padding: 0,
