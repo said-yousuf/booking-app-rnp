@@ -19,7 +19,7 @@ interface ProfileDetailsFormData {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: string; // now a single string containing both country code and number
+  phoneNumber: string;
   password: string;
 }
 
@@ -33,7 +33,7 @@ const ProfileDetails = () => {
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber: '', // stored as a single string
+      phoneNumber: '',
       password: '',
     },
   });

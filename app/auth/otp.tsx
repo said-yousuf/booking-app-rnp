@@ -42,7 +42,7 @@ const Otp = () => {
       <View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => router.navigate('/')}
+          onPress={() => router.navigate('/auth/sign-in')}
         >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>

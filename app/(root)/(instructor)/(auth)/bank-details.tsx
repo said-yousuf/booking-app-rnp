@@ -30,7 +30,7 @@ const BankDetails = () => {
 
   const onSubmit = (data: BankDetailsFormData) => {
     console.log('FormData: ', data);
-    router.navigate('/(root)/(instructor)/(auth)/location-details');
+    router.navigate('/(root)/(instructor)/(tabs)');
   };
   return (
     <View style={{ flex: 1 }}>

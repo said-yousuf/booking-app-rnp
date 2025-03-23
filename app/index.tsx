@@ -150,7 +150,7 @@ function App() {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                router.navigate('/package');
+                router.navigate('/auth/sign-in');
                 handleCloseModelPress();
               }}
             >

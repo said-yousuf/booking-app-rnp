@@ -1,8 +1,8 @@
-import { CalendarInput } from '@/components/Date-Picker';
 import PhoneNumberInput from '@/components/Phone-Number-Input';
 import icons from '@/constants/icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Image,
@@ -18,11 +18,8 @@ interface SignUpFormData {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: {
-    countryCode: string;
-    number: string;
-  };
-  dateOfBirth: string;
+  phoneNumber: string;
+  dateOfBirth: Date;
   address: string;
 }
 
@@ -36,11 +33,13 @@ const SignUp = () => {
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber: { countryCode: '', number: '' },
-      dateOfBirth: '',
+      phoneNumber: '',
+      dateOfBirth: undefined,
       address: '',
     },
   });
+  const [openDate, setOpenDate] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const onSubmit = (data: SignUpFormData) => {
     console.log('Form Data:', data);
@@ -149,22 +148,27 @@ const SignUp = () => {
               control={control}
               rules={{
                 validate: (value) =>
-                  value.countryCode && value.number
+                  value && value.includes('-')
                     ? true
                     : 'Phone number is required.',
               }}
-              render={({ field: { onChange, value } }) => (
-                <PhoneNumberInput
-                  countryCode={value.countryCode}
-                  phoneNumber={value.number}
-                  onChangeCountryCode={(code) =>
-                    onChange({ ...value, countryCode: code })
-                  }
-                  onChangePhoneNumber={(num) =>
-                    onChange({ ...value, number: num })
-                  }
-                />
-              )}
+              render={({ field: { onChange, value } }) => {
+                const [currentCountryCode, currentNumber] = value
+                  ? value.split('-')
+                  : ['', ''];
+                return (
+                  <PhoneNumberInput
+                    countryCode={currentCountryCode}
+                    phoneNumber={currentNumber}
+                    onChangeCountryCode={(code) =>
+                      onChange(`${code}-${currentNumber}`)
+                    }
+                    onChangePhoneNumber={(num) =>
+                      onChange(`${currentCountryCode}-${num}`)
+                    }
+                  />
+                );
+              }}
             />
             {errors.phoneNumber && (
               <Text style={{ color: 'red' }}>
@@ -173,20 +177,46 @@ const SignUp = () => {
             )}
           </View>
 
-          {/* Date Input */}
+          {/*Date Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Date of Birth</Text>
-            <Controller
-              name="dateOfBirth"
-              control={control}
-              rules={{ required: 'Date of birth is required.' }}
-              render={({ field: { onChange, value } }) => (
-                <CalendarInput value={value} onChange={onChange} />
+            <Text style={styles.label}>Date of birth</Text>
+            <TouchableOpacity
+              style={[styles.input, { justifyContent: 'center', height: 44 }]}
+              onPress={() => setOpenDate(true)}
+            >
+              <Controller
+                name="dateOfBirth"
+                control={control}
+                rules={{ required: 'Date of birth is required.' }}
+                render={({ field: { onChange, value } }) => (
+                  <View>
+                    <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                      <Text>
+                        {value ? value.toDateString() : 'Select Date'}
+                      </Text>
+                    </TouchableOpacity>
+                    {showDatePicker && (
+                      <DateTimePicker
+                        value={value || new Date()}
+                        mode="date"
+                        display="default"
+                        onChange={(event, selectedDate) => {
+                          setShowDatePicker(false);
+                          if (selectedDate) {
+                            onChange(selectedDate);
+                          }
+                        }}
+                      />
+                    )}
+                  </View>
+                )}
+              />
+              {errors.dateOfBirth && (
+                <Text style={{ color: 'red' }}>
+                  {errors.dateOfBirth.message}
+                </Text>
               )}
-            />
-            {errors.dateOfBirth && (
-              <Text style={{ color: 'red' }}>{errors.dateOfBirth.message}</Text>
-            )}
+            </TouchableOpacity>
           </View>
 
           {/* Address Input */}

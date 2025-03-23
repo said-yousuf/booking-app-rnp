@@ -104,7 +104,7 @@ const SignIn = () => {
 
         <TouchableOpacity
           style={styles.continueButtonContainer}
-          onPress={handleSubmit(onSubmit)}
+          onPress={() => router.navigate('/(root)/(learner)/(tabs)')}
         >
           <Text style={styles.continueButtonText}>
             Continue with Phone Number
