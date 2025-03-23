@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { enGB, registerTranslation } from 'react-native-paper-dates';
+import { en, registerTranslation } from 'react-native-paper-dates';
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -18,7 +18,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
-      registerTranslation('en-GB', enGB);
+      registerTranslation('en', en);
     }
   }, [fontsLoaded]);
 

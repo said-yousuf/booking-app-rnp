@@ -34,9 +34,9 @@ const CustomPackage = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <ScrollView>
-        <View style={styles.container}>
+        <View style={{ marginHorizontal: 20 }}>
           <TopBar />
           <Text style={styles.title}>Create Package</Text>
           <Text style={styles.subtitle}>Describe your package details</Text>
@@ -182,7 +182,6 @@ const CustomPackage = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
     position: 'relative',
     flex: 1,
     backgroundColor: '#F5F2EA',

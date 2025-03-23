@@ -31,9 +31,9 @@ const Session = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <ScrollView>
-        <View style={styles.container}>
+        <View style={{ marginHorizontal: 20 }}>
           <TopBar />
 
           <Text style={styles.title}>Describe your Session</Text>
@@ -141,7 +141,6 @@ const Session = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
     position: 'relative',
     flex: 1,
     backgroundColor: '#F5F2EA',
